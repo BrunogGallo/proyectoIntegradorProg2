@@ -2,19 +2,7 @@
 <html lang="es">
 <!-- Include Head -->
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link width="" rel="shortcut icon" href="./images/logo-mercado-liebre.jpg" />
-
-	<title> Mercado Libre Argentina</title>
-	<!-- Font Awesome Stylesheet -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-	<!-- Bootstrap Grid Stylesheet -->
-	<link rel="stylesheet" href="./css/bootstrap-grid.min.css">
-	<!-- Own Stylesheet -->
-	<link rel="stylesheet" href="./css/app.css">
-</head>
+<%- include('./partials/head')  %> 
 
 <body>
 	<!-- Header -->
@@ -34,6 +22,27 @@
 			Recuerden todo lo que necesita tanto la etiqueta form como los campos input para operar correctamtente</i> <br>
 			////////////////
 			</h2>
+	
+						<!-- Form de Registracion-->
+			<form action="" method="GET">
+				<label for="email">Email:</label>
+				<input type="email" name="email" value="">
+			
+				<label for="usuario">Usuario:</label>
+				<input type="text" name="usuario" value="">
+							
+				<label for="contrasenia">Email:</label>
+				<input type="password" name="contrasenia" value="">
+			
+				<label for="fechaNacimiento">Fecha de Nacimiento:</label>
+				<input type="date" name="fechaNacimiento" value="">
+			
+				<label for="dni">Numero de Documento:</label>
+				<input type="number" name="dni" value="">
+		
+				<label for="fotoPerfil">Foto de Perfil:</label>
+				<input type="file" name="nombre" value="">
+			</form>
 
 
 	<!-- footer -->
