@@ -5,10 +5,13 @@ const userController = {
         return res.render ('login')
     },
     profile: function (req, res) {
-        return res.render ('profile')
+        return res.render ('profile') 
     },
     register: function (req, res) {
         return res.render ('register')
+    },
+    profileEdit: function (req, res) {
+        return res.render ('profile-edit')
     }
 }
 
