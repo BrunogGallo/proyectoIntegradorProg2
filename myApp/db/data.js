@@ -7,8 +7,9 @@ const usuario = {
     fotoPerfil:''
 }
 
-const producto = {
+const productos = {
     imagen: '',
     nombre: '',
     descripcion: '',
 }
+
