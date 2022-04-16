@@ -1,15 +1,22 @@
-const usuario = {
-    email: '',
-    usuario:'',
-    contraseña:'',
-    fechaNacimiento:'',
-    nroDocumento:'',
-    fotoPerfil:''
+const data = {
+    usuario: {
+        email: '',
+        usuario:'',
+        contraseña:'',
+        fechaNacimiento:'',
+        nroDocumento:'',
+        fotoPerfil:''
+    },
+    productos: {
+        imagen: '',
+        nombre: '',
+        descripcion: '',
+    },
+    comentarios: {
+        comentario1: '',
+    }
 }
 
-const productos = {
-    imagen: '',
-    nombre: '',
-    descripcion: '',
-}
+
+
 
