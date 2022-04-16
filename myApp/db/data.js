@@ -1,7 +1,7 @@
-const data = {
-    usuario: {
+const db = {
+    user: {
         email: '',
-        usuario:'',
+        nombreUsuario:'Messi',
         contraseña:'',
         fechaNacimiento:'',
         nroDocumento:'',
@@ -16,6 +16,8 @@ const data = {
         comentario1: '',
     }
 }
+
+module.exports = db
 
 
 
