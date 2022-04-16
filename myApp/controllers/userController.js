@@ -2,16 +2,16 @@ const db = require('../db/data')
 
 const userController = {
     login: function (req, res) {
-        return res.render ('login')
+        return res.render ('login',)
     },
     profile: function (req, res) {
-        return res.render ('profile') 
+        return res.render ('profile', {'user': db.user}) 
     },
     register: function (req, res) {
         return res.render ('register')
     },
     profileEdit: function (req, res) {
-        return res.render ('profile-edit')
+        return res.render ('profile-edit', {'user': db.user})
     }
 }
 
