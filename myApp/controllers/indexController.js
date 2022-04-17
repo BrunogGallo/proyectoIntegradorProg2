@@ -12,7 +12,11 @@ const indexController = {
         })
     },
     search: function (req, res) {
-        return res.render ('search-results')
+        return res.render ('search-results', {
+            'user': user,
+            'productos': productos,
+            'comentarios': comentarios
+        })
     }
 }
 

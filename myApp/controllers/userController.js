@@ -15,7 +15,7 @@ const userController = {
         }) 
     },
     register: function (req, res) {
-        return res.render ('register')
+        return res.render ('register', {'user': user})
     },
     profileEdit: function (req, res) {
         return res.render ('profile-edit', {'user': user})
