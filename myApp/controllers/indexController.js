@@ -28,7 +28,13 @@ const indexController = {
             'productos': productos,
             'comentarios': comentarios
         })
-    }
+    },
+    login: function (req, res) {
+        return res.render ('login',)
+    },
+    register: function (req, res) {
+        return res.render ('register', {'user': user})
+    },
 }
 // Exporto para usar los datos en otros archivos
 module.exports = indexController
