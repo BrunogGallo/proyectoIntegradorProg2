@@ -20,6 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//////////////////////////////////////////////////////////////Declaro los 3 prefijos, /indexrouter index router, requiero las rutas 
+//app.use es un metodo que recibe 2 parametro: 1 nombre del recurso y 2
+//nombre de la constante en la que almacenamos el modulo del recurso
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter)

@@ -101,7 +101,7 @@ const db = {
         },
     ]
 }
-
+//exporto para hacelo visible
 module.exports = db
 
 
