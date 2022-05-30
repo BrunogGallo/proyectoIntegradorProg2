@@ -6,7 +6,7 @@
 
 <body>
 	<!-- Header -->
-	<% if (user = 'logeado') { %> 
+	<% if (locals.user != null) { %> 
 		<%- include('./partials/header') %> 
 	<% } else { %>
 		<%- include('./partials/headerLogeado') %>
