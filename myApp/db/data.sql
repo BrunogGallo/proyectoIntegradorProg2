@@ -14,3 +14,4 @@ nroDocumento      INT      NOT NULL,
 /*aQUI EN FOTO PONEMRO VARCHAR POR Q SE GUARDA COMO STRING*/
 fotoPerfil          VARCHAR(360)
 );
+
