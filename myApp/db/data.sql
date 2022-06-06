@@ -24,3 +24,13 @@ text     VARCHAR(500)      NOT NULL,
 contraseña       VARCHAR(50)      NOT NULL,
 imagen          VARCHAR(360)
 );
+
+CREATE TABLE  productos (
+
+id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
+
+nombreProducto     	VARCHAR(50)     NOT NULL,
+descripcion    	    VARCHAR(500)    NOT NULL,
+fechaCarga          DATE      		NOT NULL,
+imagen              VARCHAR(360)    NOT NULL
+);
