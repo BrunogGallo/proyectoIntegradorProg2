@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//Requiero express para poder implementarlo 
+const session = require('express-session');
+const db = require("./database/models");
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
@@ -20,7 +24,42 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//////////////////////////////////////////////////////////////Declaro los 3 prefijos, /indexrouter index router, requiero las rutas 
+//Middleware de session
+app.use (session({
+  secret: 'myApp', //este dato permite identificar la pagina web
+  resave: false,  
+  saveUninitialized: true
+}))
+
+//Middleware de session guardado en locals
+app.use(function(req, res, next) {
+  if (req.session.usuarioLogueado != undefined) {
+      res.locals.user = req.session.usuarioLogueado
+  }
+  return next();
+})
+
+//Middleware cookies
+app.use(function (req, res, next) {
+  if (req.cookies.userId != undefined && req.session.usuarioLogueado == undefined) {
+    let idUsuario = req.cookies.userId;
+
+    db.User.findByPk(idUsuario)
+    .then ((user) => {
+      req.session.usuarioLogueado = user.dataValues;
+      res.locals.user = user.dataValues;
+      return next();
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  } else {
+    return next ()
+  }
+
+})
+
+//Declaro los 3 prefijos, /indexrouter index router, requiero las rutas 
 //app.use es un metodo que recibe 2 parametro: 1 nombre del recurso y 2
 //nombre de la constante en la que almacenamos el modulo del recurso
 app.use('/', indexRouter);
