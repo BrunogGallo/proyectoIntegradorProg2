@@ -5,9 +5,11 @@ const db = {
         contraseña:'baile',
         fechaNacimiento:'03/03/1999',
         nroDocumento:'5567890',
-        fotoPerfil:'https://www.hola.com/fashion/imagenes/lifestyle/2020112270613/charli-damelio-dixie-tiktok-jennifer-lopez/0-311-530/charlidamelio1-a.jpg'
-        
+        fotoPerfil:'https://www.hola.com/fashion/imagenes/lifestyle/2020112270613/charli-damelio-dixie-tiktok-jennifer-lopez/0-311-530/charlidamelio1-a.jpg',
+        auto: si
     },
+
+
     
 
     productos: [
