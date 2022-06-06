@@ -14,3 +14,13 @@ nroDocumento      INT      NOT NULL,
 /*aQUI EN FOTO PONEMRO VARCHAR POR Q SE GUARDA COMO STRING*/
 fotoPerfil          VARCHAR(360)
 );
+
+CREATE TABLE  comentarios (
+
+id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
+
+nombreUsuario      VARCHAR(50)        NOT NULL,
+text     VARCHAR(500)      NOT NULL,
+contraseña       VARCHAR(50)      NOT NULL,
+imagen          VARCHAR(360)
+);
