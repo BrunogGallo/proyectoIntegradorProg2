@@ -14,7 +14,7 @@ const indexController = {
     // queremos que queremos enviar con la vista
     //los uso en funcion de comen
 
-    findAll: (req, res) => { //Puedo cambiar el nombre findAll
+    findAll: (req, res) => { //Puedo cambiar el nombre findAll, esto iria para el index
 
         db.Producto.findAll()
             .then((result) =>{
@@ -24,7 +24,23 @@ const indexController = {
             });
 
     },
-   
+
+    findAll: (req, res) => { //Este es para resultado de busquedas
+        let busqueda = req.query.search
+        db.Producto.findAll({
+            where: [{nombreProducto: { [op.like]: busqueda}}]
+        })
+
+            .then((result) =>{
+                return res.render ('search-results', {
+                    'productos': result,
+                    'user': users,
+                    'comentarios': comentarios
+                });
+            });
+
+    },
+    
     index: function (req, res) 
     {
         return res.render ('index', {
