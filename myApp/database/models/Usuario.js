@@ -1,6 +1,6 @@
 module.exports = function (sequelize, dataTypes){
 
-    let alias = 'User'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
+    let alias = 'Usuario'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
 
     let cols = {
         id: {
@@ -8,14 +8,13 @@ module.exports = function (sequelize, dataTypes){
             primaryKey: true,
             type: dataTypes.INTEGER
         },
-        created_at : {
-            type: dataTypes.DATE,
-            allowNull:true,
+        createdAt: {
+            type: dataTypes.DATE
         },
-        updated_at: {
-            type: dataTypes.DATE,
-            allowNull: true,
+        updatedAt: {
+            type: dataTypes.STRING
         },
+  
         nombre: {
             type: dataTypes.STRING
         },
@@ -28,14 +27,14 @@ module.exports = function (sequelize, dataTypes){
         nombreUsuario: {
             type: dataTypes.STRING
         },
-        contrasena: {
+        contraseña: {
             type: dataTypes.STRING
         },
         fechaNacimiento: {
-            type: dataTypes.STRING
+            type: dataTypes.DATE
         },
-        nroDocumento: {
-            type: dataTypes.STRING
+        seguidores: {
+            type: dataTypes.DATE
         },
         fotoPerfil: {
             type: dataTypes.STRING
@@ -45,13 +44,13 @@ module.exports = function (sequelize, dataTypes){
     }
 
     let config = {
-        tableName : "users",
+        tableName : "usuario",
         timestamps:true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
         underscored: true, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
     };
 
-    const User = sequelize.define(alias, cols, config);
+    const Usuario = sequelize.define(alias, cols, config);
 
-    return User;
+    return Usuario;
 
 } 
