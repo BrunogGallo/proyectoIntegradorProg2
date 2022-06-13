@@ -27,17 +27,16 @@ const indexController = {
 
     findAll: (req, res) => { //Este es para resultado de busquedas
         let busqueda = req.query.search
-        db.Producto.findAll({
-            where: [{nombreProducto: { [op.like]: busqueda}}]
+        productos.findAll({
+            where: [{nombreProducto: { [op.like]: busqueda}}, {descripcion: {[op.like]: busqueda} }]
         })
-
-            .then((result) =>{
-                return res.render ('search-results', {
-                    'productos': result,
-                    'user': users,
-                    'comentarios': comentarios
-                });
+        .then((result) =>{
+            return res.render ('search-results', {
+                'productos': result,
+                'user': users,
+                'comentarios': comentarios
             });
+        });
 
     },
     

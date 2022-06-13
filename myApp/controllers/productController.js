@@ -22,7 +22,7 @@ const productoController = {
                 nombreProducto: result.nombreProducto,
                 descripcion: result.descripcion,
                 imagen: result.imagen,
-                comentarios: result.idComentario,
+                comentarios: result.comentarios,
                 fechaPosteo: fechaPost,
                 fechaEdicion: fechaEdit
             }
