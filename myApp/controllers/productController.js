@@ -33,6 +33,8 @@ const productoController = {
             })
         })
     },
+
+    
     mostrarProducto: function (req, res) {
         return res.render ('products', {
             'productos': productos[0],
