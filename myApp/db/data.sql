@@ -42,24 +42,30 @@ imagen              VARCHAR(360)    NOT NULL
 CREATE TABLE  usuarios (
 
 id                  INT              UNSIGNED   PRIMARY KEY  AUTO_INCREMENT, 
-createdAt			TIMESTAMP 		 NOT NULL,
+createdAt			DATE 		     NULL,
+updatedAt           DATE 		     NULL,
 nombre      		VARCHAR(50)      NOT NULL,
 apellido    		VARCHAR(50)      NOT NULL,
 email       		VARCHAR(50)      NOT NULL,
 nombreUsuario       VARCHAR(50)      NOT NULL,
 contraseña       	VARCHAR(50)      NOT NULL,
 fechaNacimiento     DATE      		 NOT NULL,
-nroDocumento      	INT      		 NOT NULL,
-fotoPerfil          VARCHAR(360)		
+seguidores          INT,
+cantidadProductos   INT,
+cantidadComentarios INT,
+fotoPerfil          VARCHAR(360)
+
+FOREIGN KEY (seguidores) REFERENCES seguidores (idSeguido)
+FOREIGN KEY (cantidadProductos) REFERENCES productos (id)
+FOREIGN KEY (idComentario) REFERENCES comentarios (idUsuario)	
 );
 
 CREATE TABLE  comentarios (
 
 id                 INT              UNSIGNED    PRIMARY KEY  AUTO_INCREMENT, 
-createdAt		   TIMESTAMP 		NOT NULL,
+createdAt		   DATE 		    NULL,
 idUsuario		   INT				NOT NULL,
 texto     	       TEXT				NOT NULL,
-fechaPosteo        TIMESTAMP        NOT NULL,
 
 FOREIGN KEY (idUsuario) REFERENCES usuarios (id)
 );
@@ -67,11 +73,10 @@ FOREIGN KEY (idUsuario) REFERENCES usuarios (id)
 CREATE TABLE  productos (
 
 id                  INT              UNSIGNED      PRIMARY KEY     AUTO_INCREMENT, 
-createdAt			TIMESTAMP		 NOT NULL,
-updatedAt			TIMESTAMP 		 NOT NULL,
+createdAt			DATE		     NULL,
+updatedAt			DATE 		     NULL,
 nombreProducto      VARCHAR(50)      NOT NULL,
 descripcion     	TEXT    		 NOT NULL,
-fechaCarga          DATE		     NOT NULL,
 imagen              VARCHAR(360) 	 NOT NULL,
 idComentario		INT,	 
 
