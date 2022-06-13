@@ -1,6 +1,6 @@
 module.exports = function (sequelize, dataTypes){
 
-    let alias = 'Comment'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
+    let alias = 'Comentario'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
 
     let cols = {
         id: {
@@ -8,40 +8,30 @@ module.exports = function (sequelize, dataTypes){
             primaryKey: true,
             type: dataTypes.INTEGER
         },
-        created_at : {
-            type: dataTypes.DATE,
-            allowNull:true,
+        createdAt: {
+            type: dataTypes.DATE
         },
-        updated_at: {
-            type: dataTypes.DATE,
-            allowNull: true,
+        idUsuario: {
+            type: dataTypes.INTEGER
         },
-        name: {
+        idProducto: {
+            type: dataTypes.INTEGER
+        },
+        texto: {
             type: dataTypes.STRING
         },
-        nombreUsuario: {
-            type: dataTypes.STRING
-        },
-        text: {
-            type: dataTypes.STRING
-        },
-        contrasena: {
-            type: dataTypes.STRING
-        },
-        imagen: {
-            type: dataTypes.STRING
-        }
+       
 
     }
 
     let config = {
-        tableName : "comments",
+        tableName : "comentarios",
         timestamps:true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
         underscored: true, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
     };
 
-    const Comment = sequelize.define(alias, cols, config);
+    const Comentario = sequelize.define(alias, cols, config);
 
-    return Comment;
+    return Comentario;
 
 } 
