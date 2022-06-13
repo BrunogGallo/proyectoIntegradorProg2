@@ -1,6 +1,6 @@
 //Almaceno en la variable db los datos q tengo en el archivo data db, uso los datos de info q estan en data en este archivo
 const db = require('../database/models')
-//lo mismo
+
 const users = db.User
 const productos = db.Producto
 const comentarios = db.Comentario
@@ -16,7 +16,7 @@ const indexController = {
 
     findAll: (req, res) => { //Puedo cambiar el nombre findAll, esto iria para el index
 
-        db.Producto.findAll()
+        productos.findAll()
             .then((result) =>{
                 return res.render ('index', {
                     'productos': result
