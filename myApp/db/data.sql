@@ -39,10 +39,10 @@ imagen              VARCHAR(360)    NOT NULL
 
 
 //Tablas bruno
-CREATE TABLE  usuario (
+CREATE TABLE  usuarios (
 
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-createdAt			DATE			 NOT NULL,
+id                  INT              UNSIGNED   PRIMARY KEY  AUTO_INCREMENT, 
+createdAt			TIMESTAMP 		 NOT NULL,
 nombre      		VARCHAR(50)      NOT NULL,
 apellido    		VARCHAR(50)      NOT NULL,
 email       		VARCHAR(50)      NOT NULL,
@@ -55,37 +55,35 @@ fotoPerfil          VARCHAR(360)
 
 CREATE TABLE  comentarios (
 
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-createdAt		   DATE				NOT NULL,
+id                 INT              UNSIGNED    PRIMARY KEY  AUTO_INCREMENT, 
+createdAt		   TIMESTAMP 		NOT NULL,
 idUsuario		   INT				NOT NULL,
-nombreUsuario      VARCHAR(50)      NOT NULL,
 texto     	       TEXT				NOT NULL,
-contraseña         VARCHAR(50)      NOT NULL,
-imagen             VARCHAR(360),
+fechaPosteo        TIMESTAMP        NOT NULL,
 
-FOREIGN KEY (idUsuario) REFERENCES usuario (id)
+FOREIGN KEY (idUsuario) REFERENCES usuarios (id)
 );
 
 CREATE TABLE  productos (
 
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-createdAt			DATE			 NOT NULL,
-updatedAt			DATE 		     NOT NULL,
+id                  INT              UNSIGNED      PRIMARY KEY     AUTO_INCREMENT, 
+createdAt			TIMESTAMP		 NOT NULL,
+updatedAt			TIMESTAMP 		 NOT NULL,
 nombreProducto      VARCHAR(50)      NOT NULL,
 descripcion     	TEXT    		 NOT NULL,
 fechaCarga          DATE		     NOT NULL,
 imagen              VARCHAR(360) 	 NOT NULL,
-comentarios			TEXT,	 
+idComentario		INT,	 
 
-FOREIGN KEY (comentarios) REFERENCES comentarios (id)
+FOREIGN KEY (idComentario) REFERENCES comentarios (id)
 );
 
 CREATE TABLE  seguidores (
 
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-idSeguidor		INT			NOT NULL,
-idSeguido		INT 		NOT NULL,
+id              INT     UNSIGNED    PRIMARY KEY  AUTO_INCREMENT, 
+idSeguidor		INT     UNSIGNED	NOT NULL,
+idSeguido		INT     UNSIGNED 	NOT NULL,
 
-FOREIGN KEY (idSeguidor) REFERENCES usuario (id),
-FOREIGN KEY (idSeguido) REFERENCES usuario (id)
+FOREIGN KEY (idSeguidor) REFERENCES usuarios (id),
+FOREIGN KEY (idSeguido) REFERENCES usuarios (id)
 );
