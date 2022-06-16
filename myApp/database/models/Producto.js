@@ -13,7 +13,7 @@ module.exports = function (sequelize, dataTypes){
             allowNull: true
         },
         updatedAt: {
-            type: dataTypes.Date,
+            type: dataTypes.DATE,
             allowNull: true
         },
     
@@ -41,6 +41,14 @@ module.exports = function (sequelize, dataTypes){
 
     const Producto = sequelize.define(alias, cols, config);
 
-    return Producto;
+    Producto.associate = function (models) {
+        Producto.belongsTo (models.Usuario, {
+            as: 'usuarios',
+            foreignKey: 'idUsuario'
+        })
+    }
 
-} 
+    return Producto; //Cierra la funcion que exportamos al principio del archivo.
+    }
+
+
