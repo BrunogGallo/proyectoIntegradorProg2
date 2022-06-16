@@ -7,9 +7,11 @@
 
 <body>
 	<!-- Header -->
-	
-	<%- include('./partials/header') %>
-
+	<% if (locals.user != undefined) { %> 
+		<%- include('./partials/headerLogeado') %> 
+	<% } else { %>
+		<%- include('./partials/header') %>
+	<% } %> 
 	<!-- /Header -->
 
 	<!-- product detail -->
@@ -44,7 +46,7 @@
 						<% } %>
 					</section>
 
-					<form class="form" action="" method="GET">
+					<form class="form" action="" method="POST">
 						<input class="form-input" type="text" value="" placeholder="Agregar comentario">
 						<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
 					</form>
