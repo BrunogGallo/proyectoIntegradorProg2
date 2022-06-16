@@ -9,7 +9,12 @@ module.exports = function (sequelize, dataTypes){
             type: dataTypes.INTEGER
         },
         createdAt: {
-            type: dataTypes.DATE
+            type: dataTypes.DATE,
+            allowNull: true
+        },
+        updatedAt: {
+            type: dataTypes.Date,
+            allowNull: true
         },
     
         nombreProducto: {
@@ -30,12 +35,12 @@ module.exports = function (sequelize, dataTypes){
 
     let config = {
         tableName : "productos",
-        timestamps:true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
-        underscored: true, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
+        timestamps: true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
+        underscored: false, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
     };
 
-    const Producto= sequelize.define(alias, cols, config);
+    const Producto = sequelize.define(alias, cols, config);
 
-    return Producto
+    return Producto;
 
 } 

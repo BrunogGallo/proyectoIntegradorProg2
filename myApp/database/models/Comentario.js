@@ -9,7 +9,8 @@ module.exports = function (sequelize, dataTypes){
             type: dataTypes.INTEGER
         },
         createdAt: {
-            type: dataTypes.DATE
+            type: dataTypes.DATE,
+            allowNull: true
         },
         idUsuario: {
             type: dataTypes.INTEGER
@@ -26,8 +27,8 @@ module.exports = function (sequelize, dataTypes){
 
     let config = {
         tableName : "comentarios",
-        timestamps:true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
-        underscored: true, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
+        timestamps: true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
+        underscored: false, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
     };
 
     const Comentario = sequelize.define(alias, cols, config);
