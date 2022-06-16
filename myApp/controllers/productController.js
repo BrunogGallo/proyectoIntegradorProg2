@@ -6,12 +6,13 @@ const comentarios = db.Comentario
 
 const productoController = {
 
-    showOne: function (req, res) { //Este es mostrar producto, detallesProducto
-        let busqueda = req.query.search
-        productos.findAll({
-            where: [{nombreProducto: busqueda}]
+    detallesProducto: function (req, res) { //Funciona como un showOne
+        let id = req.params.id
+        comentarios.findAll ({
+            where: [{idProducto: id}]
         })
-        then ((result) => {
+        productos.findByPk(id)
+        .then ((result) => {
             let fi1 = new Date(result.createdAt);
             fechaPost = `${fi1.getDate()}-${fi1.getMonth() + 1}-${fi1.getFullYear()}`;
 
@@ -22,10 +23,10 @@ const productoController = {
                 nombreProducto: result.nombreProducto,
                 descripcion: result.descripcion,
                 imagen: result.imagen,
-                comentarios: result.comentarios,
                 fechaPosteo: fechaPost,
                 fechaEdicion: fechaEdit
             }
+        
 
             return res.render ('products', {
                 productos: producto,
