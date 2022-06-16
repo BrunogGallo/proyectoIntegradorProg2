@@ -16,12 +16,17 @@
 				<h2 class="products-title">Ingresar</h2>
 			</div>
 			<!--Form de Login-->
-			<form action="/" method="GET">
-				<label class="form-label" for="email">Usuario:</label>
+			<% if(locals.errors){ %>
+				<p class="mensajeError" style="color: red;"> <%= errors.message %>
+				</p>
+			<% } %>
+			<form action="/" method="POST">
+				<div class="title">Login</div>
+				<label class="form-label" for="email">Email:</label>
 				<input class="form-input" type="email" name="email" value="">
 
 				<label class="form-label" for="contrasenia">Contraseña:</label>
-				<input class="form-input" type="password" name="contrasenia" value="">
+				<input class="form-input" type="password" name="contraseña" value="">
 				
 				<label class="form-label" for="recordarme">Recordarme</label>
 				<input class="form-input" type="checkbox" name="recordarme" value="">
