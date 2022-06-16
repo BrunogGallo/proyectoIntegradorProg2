@@ -1,7 +1,7 @@
 const db = {
     user: {
         email: 'Charliedamelio@gmail.com',
-        nombreUsuario:'Charliedameliobova',
+        nombreUsuario:'Charliedamelio',
         contraseña:'baile',
         fechaNacimiento:'03/03/1999',
         nroDocumento:'5567890',
