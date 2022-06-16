@@ -14,16 +14,21 @@ const userController = {
         let info = req.body;
         let errors = {};
 
-        if (info.email == "") {
-            errors.message = 'El campo de email esta incompleto'
-        } else if (info.password == ""){
-            errors.message = 'El campo de contraseña esta incompleto'
-        } else {
-            user.findOne ({
-                where: [{email: info.email}]
-            })
-        }
+        user.findOne({
+            where : [{ email :  info.email}]
+        }).then((result) => {
+            if (result != null) {
+                let claveCorrecta = bcryptjs.compareSync(info.password  , result.password )
+                if (claveCorrecta) {
+                    return res.send("Existe el mail " + result.email + " y la clave es correcta")
+                } else {
+                    return res.send("Existe el mail " + result.email + " pero la clave es incorrecta")
+                }
 
+            } else {
+                return res.send("No xiste el mail " + info.email) 
+            }
+        });
     },
     profile: function (req, res) {
         return res.render ('profile', {
