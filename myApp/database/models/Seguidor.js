@@ -25,16 +25,6 @@ module.exports = function (sequelize, dataTypes){
 
     const Seguidor = sequelize.define(alias, cols, config);
 
-    // Seguidor.associate = function (models) {
-    //     Seguidor.belongsToMany (models.Usuario, {
-    //         as: 'usuarios',
-    //         thourgh: 'seguidores',
-    //         foreignKey: 'id',
-    //         otherKey: ''
-    //     })
-    // }
-
-    //COMMAND K + COMMAND C para comentar varias lineas
     return Seguidor;
 
 } 

@@ -2,7 +2,7 @@ module.exports = {
   "development": {
     "username": "root",
     "password": "root",
-    "database": "proyectoFinalProg2",
+    "database": "db",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "operatorAliases": 0
@@ -10,17 +10,17 @@ module.exports = {
   "test": {
     "username": "root",
     "password": "root",
-    "database": "test",
+    "database": "db",
     "host": "127.0.0.1",
-    "dialect": "proyectoFinalProg2",
+    "dialect": "mysql",
     "operatorAliases": 0
   },
   "production": {
     "username": "root",
     "password": "root",
-    "database": "test",
+    "database": "db",
     "host": "127.0.0.1",
-    "dialect": "proyectoFinalProg2",
+    "dialect": "mysql",
     "operatorAliases": 0
   }
 }

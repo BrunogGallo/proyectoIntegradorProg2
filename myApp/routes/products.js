@@ -4,9 +4,8 @@ const router = express.Router();
 
 const productController = require ('../controllers/productController');
 
-router.get ('/', productController.mostrarProducto)
+router.get ('/detalles/id:?', productController.mostrarProducto)
 
-
-router.get ('/add', productController.agregarProducto)
+router.get ('/agregar', productController.agregarProducto)
 
 module.exports = router
