@@ -29,7 +29,7 @@ const productoController = {
         
 
             return res.render ('products', {
-                productos: producto,
+                datosProducto: producto,
                 comentarios: comentarios
             })
         })

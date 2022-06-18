@@ -1,10 +1,6 @@
 //Almaceno en la variable db los datos q tengo en el archivo data db, uso los datos de info q estan en data en este archivo
 const db = require('../database/models')
 
-const users = db.User
-const productos = db.Producto
-const comentarios = db.Comentario
-
 const indexController = {
     //Escribimos metodos, se encarga de manejar los requiest
     //Express utiliza el metodo render(entregar), metodo que se encuentra dentro del objeto response
@@ -16,10 +12,10 @@ const indexController = {
 
     index: (req, res) => { //Puedo cambiar el nombre findAll, esto iria para el index
 
-        productos.findAll()
+        db.Producto.findAll()
             .then((result) =>{
                 return res.render ('index', {
-                    listadoProductos: result
+                    productos: result
                 });
             });
 
@@ -33,21 +29,14 @@ const indexController = {
         .then((result) =>{
             return res.render ('search-results', {
                 listadoProductos: result,
-                user: users,
-                comentarios: comentarios
+                user: db.Usuario,
+                comentarios: db.Comentario
             });
         });
 
     },
     
-    index: function (req, res) 
-    {
-        return res.render ('index', {
-            'user': users,
-            'productos': productos,
-            'comentarios': comentarios
-        })
-    },
+
     search: function (req, res) {
         return res.render ('search-results', {
             'user': users,

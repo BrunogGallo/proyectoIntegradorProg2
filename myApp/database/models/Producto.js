@@ -41,6 +41,18 @@ module.exports = function (sequelize, dataTypes){
 
     const Producto = sequelize.define(alias, cols, config);
 
-    return Producto;
+    Producto.associate = function (models) {
+        Producto.belongsTo (models.Usuario, { //1 producto pertenece a un usuario
+            as: 'usuario',
+            foreignKey: 'idUsuario'
+        })
+        Producto.hasMany (models.Comentario, { //1 producto puede tener muchos comentarios
+            as: 'comentarios',
+            foreignKey: 'idProducto'
+        })
+    }
 
-} 
+    return Producto; //Cierra la funcion que exportamos al principio del archivo.
+    }
+
+
