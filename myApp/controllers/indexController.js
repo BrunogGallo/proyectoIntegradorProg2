@@ -12,28 +12,57 @@ const indexController = {
 
     index: (req, res) => { //Puedo cambiar el nombre findAll, esto iria para el index
 
-        db.Producto.findAll()
+        db.Producto.findAll({
+            include: [{
+                association: 'usuario' //Traemos los datos de usuario
+                }, {
+                association: 'comentarios', //Traemos los comentarios
+                    include: {
+                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
+                    }
+                }
+            ],
+            order: [
+                ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
+            ]
+        })
             .then((result) =>{
+                console.log(result);
                 return res.render ('index', {
-                    productos: result
+                    datos: result
                 });
-            });
+            })
+            .catch ((error) =>{
+                console.log(error);
+            })
 
     },
 
     search: (req, res) => { //Este es para resultado de busquedas
         let busqueda = req.query.search
         productos.findAll({
-            where: [{nombreProducto: { [op.like]: busqueda}}, {descripcion: {[op.like]: busqueda} }]
+            where: [
+                {nombreProducto: { [op.like]: busqueda}}, 
+                {descripcion: {[op.like]: busqueda} }
+            ],
+            include: [{
+                association: 'usuario' //Traemos los datos de usuario
+            }],
+            include:[{
+                association: 'comentarios', //Traemos los comentarios
+                include: [{
+                    association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
+                }]
+            }],
+            order: [
+                ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
+            ]
         })
         .then((result) =>{
             return res.render ('search-results', {
-                listadoProductos: result,
-                user: db.Usuario,
-                comentarios: db.Comentario
+                datos: result
             });
-        });
-
+        })
     },
     
 
