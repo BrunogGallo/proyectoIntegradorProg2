@@ -27,7 +27,7 @@ module.exports = function (sequelize, dataTypes){
 
     let config = {
         tableName : "comentarios",
-        timestamps: true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
+        timestamps: false, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
         underscored: false, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
     };
 
@@ -35,7 +35,7 @@ module.exports = function (sequelize, dataTypes){
 
     Comentario.associate = function (models) {
         Comentario.belongsTo (models.Usuario, { //1 comentario pertenece a un unico usuario
-            as: 'usuario',
+            as: 'comentarioUsuario',
             foreignKey: 'idUsuario'
         })
         Comentario.belongsTo (models.Producto, { //1 comentario se hace sobre un solo producto a la vez
