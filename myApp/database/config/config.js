@@ -3,7 +3,7 @@ module.exports = {
     "username": "root",
 <<<<<<< HEAD
     "password": null,
-    "database": "localHost",
+    "database": "db",
 =======
     "password": "root",
     "database": "db",
@@ -16,7 +16,7 @@ module.exports = {
     "username": "root",
 <<<<<<< HEAD
     "password": null,
-    "database": "localHost",
+    "database": "db",
 =======
     "password": "root",
     "database": "db",
@@ -29,7 +29,7 @@ module.exports = {
     "username": "root",
 <<<<<<< HEAD
     "password": null,
-    "database": "localHost",
+    "database": "db",
 =======
     "password": "root",
     "database": "db",
