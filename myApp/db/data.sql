@@ -107,3 +107,12 @@ INSERT INTO productos VALUES (default, '2022-06-18', default, 'Chevrolet Onix', 
 INSERT INTO productos VALUES (default, '2022-06-18', default, 'Chevrolet Onix', 'auto rojo moderno', 'https://www.megautos.com/wp-content/uploads/2019/09/nuevo-chevrolet-onix-2020-rojo-h1.jpg', '2');
 
 INSERT INTO productos VALUES (default, '2022-06-18', default, 'Chevrolet Onix', 'auto azul moderno', 'https://acroadtrip.blob.core.windows.net/catalogo-imagenes/l/RT_V_ec2a039ef81144019c35c9f6347dd121.jpg', '2')
+
+datos para comentarios
+INSERT INTO comentarios VALUES (default, default, 1, 1, 'muy recomendable');
+
+INSERT INTO comentarios VALUES (default, default, 2, 1, 'muy bueno');
+
+INSERT INTO comentarios VALUES (default, default, 2, 2, 'gran precio');
+
+INSERT INTO comentarios VALUES (default, default, 3, 1, 'muy recomendable')
