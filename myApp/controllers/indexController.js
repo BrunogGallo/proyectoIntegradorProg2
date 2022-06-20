@@ -1,6 +1,7 @@
 const db = require('../database/models') //Requiero los modelos de la base de datos y los almaceno en db
 const op = db.Sequelize.Op //Requiero los operadores de sequalize y los almaceno en op
 
+
 const indexController = {
     //Escribimos metodos, se encarga de manejar los requiest
     //Express utiliza el metodo render(entregar), metodo que se encuentra dentro del objeto response
@@ -50,10 +51,12 @@ const indexController = {
                         association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
                     }
                 }],
-            where: [
-                {'nombreProducto': {[op.like]: `%${busqueda}%`}} ||
+            where: {
+                [op.or]: [ //El operador or permite que busque tanto por descripcion como por nombre del producto
+                {'nombreProducto': {[op.like]: `%${busqueda}%`}}, //el operador like permite encontrar datos que se asemejen a la busqueda, sin estar restricto a datos que sean identos
                 {'descripcion': {[op.like]: `%${busqueda}%`}} 
-                ],
+                ]
+            },
             order: [
                 ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
             ]
