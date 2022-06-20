@@ -36,7 +36,7 @@
 							</figure>
 							<article class="product-box_data">
 								<h2> <%= datos[i].nombreProducto %> </h2>
-								<p>Subido por: <%=  datos[i].usuario.nombreUsuario %></p>
+								<p>Subido por: <a href="/users/profile"><%= datos[i].usuario.nombreUsuario %></a></p>
 								<p> <%= datos[i].descripcion %> </p>
 								<p>Comentarios: <%= datos[i].comentarios.length %> </p>
 							</article>
