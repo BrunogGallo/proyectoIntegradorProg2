@@ -12,69 +12,109 @@ const userController = {
     },
 
     procesarLogin: function (req, res) {
-        //let info me trae la informacion que yo envie en el formulario , mail y passwor
     
         let info = req.body;
         let errors = {};
-//y fue a user y busco uno que tuviera el mailn, info.mail y ahora  el then me trae un result de esto q le pedi 
-        user.findOne({
-            where : [{ email :  info.email}]
-            //este result que me trae es la informacion del usuario, de la base de datos , ese rsult es un objeto literal
-            //Con todas la propiedades, datavalue, email id, etc , toda la info del usuario esta en la propiedad data valuees
-            //Nosotros queremos guardar ese datavalues
-        }).then((result) => {
-            //El result de abajo me trae la informacion del usuario
-            //Lo que se ejecuta es lo siguiente--> me trjo la informacion, info que fue la informacion  q yo envie en el formulario, busco uno, me trae un result, ese result
-            //es la informarcion dlel usuario de la base de datos, ese result es un obj literal con todas las formas.  Nosotros queremos guaradar ese database .
-            //Si clave correcta es verdadero va a entrar si existe un mai, eso es un paso a pasao de lo que hace, 
-            //Dentro de clave correcya utilizo req. resiion .user y le pomgo esa prop
-            if (result != null) {
-                //si clave correcta es verdadero va a entrar a existe un mail y la clave es correcta 
-                //si clave correcta es falso va a entrar a existe un mail y clave es incorrecta
-                //si clave correcta es falso y msil tambien va a no existe mail 
-                //dentro de clave correcta tengo que utilizar la session poara guardar informacion, voy a gauardar el result.datavalues
-                //Ahi guardo la informacion del uusario, le pongo un valor y a ese valor lo voy a traer de la variable result 
-                let claveCorrecta = bcryptjs.compareSync(info.password  , result.password )
-                if (claveCorrecta) {
-                    //datavalue me trae la informacion y me lo va a guardar en la session 
-                    req.session.user = result.dataValues 
-                    //Ahora impprimo esto aca, hago console loge
-                   // console.log( req.session.user );
+        if (info.email == "") {
+            errors.message = "El input de email esta vacio";
+            res.locals.errors = errors;
+            return res.render("login");
+            
+        } else if (info.contraseña == ""){
+            errors.message = "El input de contraseña esta vacio";
+            res.locals.errors = errors;
+            return res.render('login')
 
-                    //Evaluar si el check box esta en true o existe, pa evaluar un chek box en la parte de backend 
-                    //Pongo if, hsgo un condicional y voy a velauar, como evaluo este check box, req.body
-                   if(req.body.remember =! undefined){
-                       //si existe el check box de recordar hago una cookie, se crea enviandosela al usuario, uso el objeto res
-                       //guardo la indo en la cookie por 5 minutos 
-                       res.cookie ('userId' , req.session.user.id, {maxAge: 1000 * 60 * 5})
-                   } 
-
-                    //Cuando me logue quiero que me envies a la pagina principql de autos 'movies/all")
-                    return res.redirect('/Productos')
+        }  else {
+            users.findOne({
+                where : [{ email :  info.email}]
+            }).then((result) => {
+                if (result != null) {
+                    let claveCorrecta = bcryptjs.compareSync(info.contraseña  , result.contraseña )
+                    if (claveCorrecta) {
+                        req.session.users = result.dataValues;
+    
+                        /* Evaluar si el checkbox esta en true o existe */
+    
+                        if (req.body.remember != undefined) {
+                            res.cookie('userId', req.session.idUsuario, { maxAge : 1000 * 60 * 5})
+                        }
+                       
+                        return res.redirect("/productos/all")
+                    } else {
+                        /* Este paso se ejecuta por cada validacion que queramos */
+                        errors.message = "La clave es incorrecta"
+                        res.locals.errors = errors;
+                        return res.render('login');
+                    }
                     
-                    return res.send("Existe el mail " + result.email + " y la clave es correcta")
                 } else {
-                    return res.send("Existe el mail " + result.email + " pero la clave es incorrecta")
+                    /* Este paso se ejecuta por cada validacion que queramos */
+                    errors.message = "No existe el email " + info.email
+                    res.locals.errors = errors;
+                    return res.render('login');
                 }
+            });
+        }
 
-            } else {
-                return res.send("No existe el mail " + info.email) 
+        
+
+        
+
+
+
+
+
+    },
+    register : (req, res) => {
+        return res.render("registerUser",);
+    },
+    procesarRegister : (req, res) => {
+        let info = req.body;
+        /* validaciones del form */
+        let errors = {};
+
+        if (info.nombre == "") {
+            errors.message = "El input de nombre esta vacio";
+            res.locals.errors = errors;
+            return res.render('registerUser')
+            
+        } else if (info.email == ""){
+            errors.message = "El input de email esta vacio";
+            res.locals.errors = errors;
+            return res.render('registerUser')
+
+        }  else if (info.contraseña == ""){
+            errors.message = "El input de contraseña esta vacio";
+            res.locals.errors = errors;
+            return res.render('registerUser')
+
+        } else {
+
+            let contraseñaEncriptada = bcryptjs.hashSync(info.contraseña, 10);
+            let fotoPerfil = req.file.filename;
+
+            let userParaGuardar = {
+        
+                nombre : info.nombre,
+                apellido: info.apellido,
+                email : info.email,
+                contraseña : contraseñaEncriptada,
+                remember_token: "false",
+                createdAt : new Date(),
+                updatedAt : new Date(),
+                fotoPerfil : fotoPerfil
             }
-        });
-    },
-    profile: function (req, res) {
-        return res.render ('profile', { 
-            'user': user,
-            'productos': productos,
-            'comentarios': comentarios
-        }) 
-    },
-    register: function (req, res) {
-        return res.render ('register', {'user': user})
-    },
-    profileEdit: function (req, res) {
-        return res.render ('profile-edit', {'user': user})
+
+            users.create(userParaGuardar)
+            .then((result) => {
+                return res.redirect("/usuarios/login")
+            });
+            
+        }
+
     }
+
 }
 
 module.exports = userController;
