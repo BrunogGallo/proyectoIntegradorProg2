@@ -8,4 +8,5 @@ router.get ('/detalles/id:?', productController.mostrarProducto)
 
 router.get ('/agregar', productController.agregarProducto)
 
+router.get ()
 module.exports = router

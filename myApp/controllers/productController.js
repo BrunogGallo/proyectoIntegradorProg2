@@ -1,23 +1,15 @@
 const db = require('../database/models'); //requerimos los modelos. requerimos la conexion a la base de datos y los modelos creados. 
 //cuando queremos filtrar por criterios que no sea  igualdad necesitamos utilizar los operadores de sequelize, en este caso const db = require
 
+const users = db.User //el alias que le pondre a mi modelo
 
+const productos = db.Producto
+const comentarios = db.Comentario
 const productController = {
 
-    index: function (req, res) {
-        db.products.findAll({
-            include: { all: true, nested: true },
-            order: [['id', 'DESC']],
-        })
-            .then(function (products) {
-                res.render('product_index', { products });
-            })
-            .catch(function (error) {
-                res.send(error)
-            });
-    },
 
-    show: function (req, res) {
+
+    mostrarProducto: function (req, res) {
         db.products.findByPk(req.params.id, { include: { all: true, nested: true } })
             .then(function (product) {
                 console.log(product.dataValues);
@@ -29,7 +21,7 @@ const productController = {
             })
     },
 
-    add: function (req, res) {
+    agregarProducto: function (req, res) {
         if (!req.session.user) {
             throw Error('Not authorized.')
         }
