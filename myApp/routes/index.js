@@ -3,10 +3,23 @@ const express = require('express');
 const { index } = require('../controllers/indexController');
 const router = express.Router();
 const indexController = require ('../controllers/indexController');
-//Roouter .get metodo http que estamos utilizando, conta de 2 params, path q es el sufijo y nombre del recurso
-//El segundo declaro una funcion que cuenta con 2 parametros que son la variable que almacena la info.
-//Primer parametro el nombre del modulo
-//segundo parametro, metodos q se encrgan de manejar los pedidos
+
+let multer = require('multer');
+let path = require('path');
+
+let storage = multer.diskStorage({
+    destination : function(req, file, cb) {
+        cb(null, path.join(__dirname, '../public/images/users'))
+    },
+    filename : function(req, file, cb) {
+      
+        /*          name campoDelForm          -   26052022                 .png  */
+        cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname))
+    }
+});
+
+let upload = multer({ storage : storage})
+
 router.get ('/', indexController.index)
 
 router.get ('/search', indexController.search)
@@ -15,7 +28,7 @@ router.get ('/profile/:id', indexController.profile)
 
 router.get ('/profileEdit/:id', indexController.profileEdit)
 
-router.post ('/profileEdit/:id', indexController.profileUpdate)
+router.post ('/profileEdit/:id', upload.single('fotoPerfil'), indexController.profileUpdate)
 
 
 

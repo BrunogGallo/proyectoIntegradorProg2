@@ -15,7 +15,7 @@
 			<div class="col-12">
 				<h2 class="products-title">Editar mi perfil</h2>
 			</div>
-			<form action="/profileEdit/<%= datos.id %>" method="POST">
+			<form action="/profileEdit/<%= datos.id %>" method="POST" enctype="multipart/form-data">
 				<label class="form-label" for="nombre">Nombre:</label>
 				<input class="form-input" type="text" name="nombre" value="<%= datos.nombre %>">
 

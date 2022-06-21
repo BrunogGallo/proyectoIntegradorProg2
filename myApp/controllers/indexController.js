@@ -110,8 +110,13 @@ const indexController = {
         })
     },
     profileUpdate: (req,res) =>{
-        datosNuevos = req.body,
-        idUsuario = req.params.id
+        datosNuevos = req.body;
+        idUsuario = req.params.id;
+        if (req.file == undefined) {
+            fotoNueva = null
+        } else {
+            fotoNueva = req.file.filename;
+        }
 
         db.Usuario.update(
             {
@@ -119,7 +124,7 @@ const indexController = {
                 apellido: datosNuevos.apellido,
                 email: datosNuevos.email,
                 nombreUsuario: datosNuevos.usuario,
-                fotoPerfil: datosNuevos.fotoPerfil,
+                fotoPerfil: fotoNueva,
                 contraseña: datosNuevos.contraseña
             },{
                 where: [{id: idUsuario}]
