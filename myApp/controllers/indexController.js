@@ -44,9 +44,9 @@ const indexController = {
         let busqueda = req.query.search //Capturo la busqueda del usuario en el form de la qs
         db.Producto.findAll({
             include: [{
-                association: 'usuario' //Traemos los datos de usuario
+                association: 'usuario' //Traemos los datos de usuario asociados a cada producto
                 }, {
-                association: 'comentarios', //Traemos los comentarios
+                association: 'comentarios', //Traemos los comentarios asociados a cada producto
                     include: {
                         association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
                     }
@@ -71,6 +71,69 @@ const indexController = {
             console.log(error);
         })
     },
+
+    profile: (req, res) => {
+        idUsuario = req.params.id
+        db.Usuario.findByPk(idUsuario, {
+            include: [{
+                association: 'seguidor'
+            },{
+                association: 'seguido'
+            }, {
+                association: 'productos',
+                order: ['createdAt', 'DESC']
+            }, {
+                association: 'comentarios',
+                order: ['createdAt', 'DESC']
+            }
+        ]
+        })
+        .then ((result) => {
+            console.log(result);
+            return res.render ('profile', {
+                datos: result
+            })
+        })
+        .catch ((error) =>{
+            console.log(error);
+        })
+    },
+    profileEdit: (req, res) =>{
+        idUsuario = req.params.id,
+        db.Usuario.findByPk(idUsuario)
+
+        .then((result) =>{
+            console.log(result);
+            return res.render('profile-edit',{
+                datos: result
+            })
+        })
+    },
+    profileUpdate: (req,res) =>{
+        datosNuevos = req.body,
+        idUsuario = req.params.id
+
+        db.Usuario.update(
+            {
+                nombre: datosNuevos.nombre,
+                apellido: datosNuevos.apellido,
+                email: datosNuevos.email,
+                nombreUsuario: datosNuevos.usuario,
+                fotoPerfil: datosNuevos.fotoPerfil,
+                contraseña: datosNuevos.contraseña
+            },{
+                where: [{id: idUsuario}]
+            }
+        )
+        .then ((result) =>{
+            console.log(datosNuevos);
+            return res.redirect ('/profile/' + idUsuario)
+        })
+        .catch ((error) =>{
+            console.log(error);
+        })
+        
+    }
     
 }
 // Exporto para usar los datos en otros archivos

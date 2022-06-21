@@ -18,7 +18,7 @@ module.exports = function (sequelize, dataTypes){
         },
     
         nombreProducto: {
-            type: dataTypes.STRING
+            type: dataTypes.STRING  
         },
         descripcion: {
             type: dataTypes.STRING

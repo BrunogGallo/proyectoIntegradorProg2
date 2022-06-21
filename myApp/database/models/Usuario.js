@@ -13,7 +13,7 @@ module.exports = function (sequelize, dataTypes){
             allowNull: true
         },
         updatedAt: {
-            type: dataTypes.STRING,
+            type: dataTypes.DATE,
             allowNull: true
         },
         nombre: {

@@ -115,4 +115,4 @@ INSERT INTO comentarios VALUES (default, default, 2, 1, 'muy bueno');
 
 INSERT INTO comentarios VALUES (default, default, 2, 2, 'gran precio');
 
-INSERT INTO comentarios VALUES (default, default, 3, 1, 'muy recomendable')
+INSERT INTO comentarios VALUES (default, default, 3, 1, 'muy recomendable')     

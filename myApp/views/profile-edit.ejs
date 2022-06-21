@@ -15,23 +15,26 @@
 			<div class="col-12">
 				<h2 class="products-title">Editar mi perfil</h2>
 			</div>
-			<form action="/users/profile" method="POST">
+			<form action="/profileEdit/<%= datos.id %>" method="POST">
+				<label class="form-label" for="nombre">Nombre:</label>
+				<input class="form-input" type="text" name="nombre" value="<%= datos.nombre %>">
+
+				<label class="form-label" for="apellido">Apellido:</label>
+				<input class="form-input" type="text" name="apellido" value="<%= datos.apellido %>">
+
 				<label class="form-label" for="email">Email:</label>
-				<input class="form-input" type="email" name="email" value="">
+				<input class="form-input" type="email" name="email" value="<%= datos.email %>">
 			
 				<label class="form-label" for="usuario">Usuario:</label>
-				<input class="form-input" type="text" name="usuario" value="">
+				<input class="form-input" type="text" name="usuario" value="<%= datos.nombreUsuario %>">
 							
 				<label class="form-label" for="contrasenia">Contraseña:</label>
-				<input class="form-input" type="password" name="contrasenia" value="">
-			
-				<label class="form-label" for="dni">Numero de Documento:</label>
-				<input class="form-input" type="number" name="dni" value="">
+				<input class="form-input" type="password" name="contraseña" value="<%= datos.contraseña %>">
 		
 				<label class="form-label" for="fotoPerfil">Foto de Perfil:</label>
-				<input class="form-input" type="file" name="fotoPerfil" value="">
+				<input class="form-input" type="file" name="fotoPerfil" value="<%= datos.fotoPerfil %>">
 
-				<button class="form-input" type="submit">Guardar cambios</button>
+				<button class="form-input" type="submit">Guardar cambios</button>	
 			</form>
 		</div>
 	</div>

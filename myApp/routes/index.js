@@ -11,4 +11,12 @@ router.get ('/', indexController.index)
 
 router.get ('/search', indexController.search)
 
+router.get ('/profile/:id', indexController.profile)
+
+router.get ('/profileEdit/:id', indexController.profileEdit)
+
+router.post ('/profileEdit/:id', indexController.profileUpdate)
+
+
+
 module.exports = router;
