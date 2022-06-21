@@ -1,56 +1,112 @@
-const db = require('../database/models') //requerimos los modelos. requerimos la conexion a la base de datos y los modelos creados. 
+const db = require('../database/models'); //requerimos los modelos. requerimos la conexion a la base de datos y los modelos creados. 
 //cuando queremos filtrar por criterios que no sea  igualdad necesitamos utilizar los operadores de sequelize, en este caso const db = require
-const users = db.User //el alias que le pondre a mi modelo
-const productos = db.Producto
-const comentarios = db.Comentario
 
-const productoController = {
 
-    detallesProducto: function (req, res) { //Funciona como un showOne
-        let id = req.params.id
-        comentarios.findAll ({      //seleccionamos el modelo sobre el cual queremos aplicar el método. en este caso: comentarios.
-            where: [{idProducto: id}]  //para buscar todos los datos registrados en la tabla debemos usar findAll()
-                                      //dentro de where pasamos el atributo de acuerdo con la columna de la tabla y el valor a buscar. 
-                                      //para filtrar datos usamos un objeto literal con el atributo where y un metodo de busqueda.  
+const productController = {
+
+    index: function (req, res) {
+        db.products.findAll({
+            include: { all: true, nested: true },
+            order: [['id', 'DESC']],
         })
-        productos.findByPk(id) // sequelize utiliza una función llamada FIND para buscar información en la base de datos. 
-         //Las opciones de FIND  son findAll(), findByPk(), findOne().
-         //El metodo findByPick() busca un registro que coincida con un valor de una clave primaria. 
-        .then ((result) => { //la función findAll() devuelve una promesa, por lo tanto necesitamos usar .then()
-                   //Escribimos el codigo de método                   
-            let fi1 = new Date(result.createdAt);
-            fechaPost = `${fi1.getDate()}-${fi1.getMonth() + 1}-${fi1.getFullYear()}`;
-
-            let fi2 = new Date(result.updatedAt);
-            fechaEdit = `${fi2.getDate()}-${fi2.getMonth() + 1}-${fi2.getFullYear()}`;
-
-            let producto = {
-                nombreProducto: result.nombreProducto,
-                descripcion: result.descripcion,
-                imagen: result.imagen,
-                fechaPosteo: fechaPost,
-                fechaEdicion: fechaEdit
-            }
-        
-
-            return res.render ('products', {
-                datosProducto: producto,
-                comentarios: comentarios
+            .then(function (products) {
+                res.render('product_index', { products });
             })
-        })
+            .catch(function (error) {
+                res.send(error)
+            });
     },
 
-    
-    mostrarProducto: function (req, res) {
-        return res.render ('products', {
-            'productos': productos[0],
-            'comentarios': comentarios,
-        })
+    show: function (req, res) {
+        db.products.findByPk(req.params.id, { include: { all: true, nested: true } })
+            .then(function (product) {
+                console.log(product.dataValues);
+                res.render('product_detail', { product });
+            })
+            .catch(function (error) {
+                console.log(req.params.id)
+                res.send(error);
+            })
     },
-    agregarProducto: function (req, res) {
-        return res.render ('product-add', {'user': user})
-    },
-} 
 
-// Exporto para usar los datos en otros archivos
-module.exports = productoController
+    add: function (req, res) {
+        if (!req.session.user) {
+            throw Error('Not authorized.')
+        }
+        res.render('add_product');
+    },
+
+    store: function (req, res) {
+        if (!req.session.user) {
+            return res.render('add_product', { error: 'Not authorized.' });
+        }
+        req.body.user_id = req.session.user.id;
+        if (req.file) req.body.img = (req.file.path).replace('public', '');
+        db.products.create(req.body)
+            .then(function () {
+                res.redirect('/')
+            })
+            .catch(function (error) {
+                res.send(error);
+            })
+        //image es el nombre del campo del formulario que carga la imagen
+        //para que venga el req.file primero le pusimos al formulario el enctype="multipart/form-data" 
+        //en req.file hay muchas propiedades y la mas importante es el path que tiene la ruta completa en donde esta el archivo
+        //el path lo aclaramos nosotoros en la carpeta destin   ation en la ruta   
+    },
+
+    delete: function (req, res) {
+        if (!req.session.user) {
+            throw Error('Not authorized.')
+        } //chequear
+        db.products.destroy({ where: { id: req.params.id } })
+            .then(function () {
+                res.redirect('/')
+            })
+            .catch(function (error) {
+                res.send(error);
+            })
+    },
+
+    edit: function (req, res) {
+        db.products.findByPk(req.params.id)
+            .then(function (products) {
+                res.render('product_edit', { products });
+            })
+            .catch(function (error) {
+                res.send(error);
+            })
+    },
+
+    update: function (req, res) {
+        if (req.file) req.body.img = (req.file.path).replace('public', '');
+        db.products.update(req.body, { where: { id: req.params.id } })
+            .then(function () {
+                res.redirect('/')
+            })
+            .catch(function (error) {
+                res.send(error);
+            })
+    },
+
+    comment: function (req, res) {
+      
+        if(!req.session.user){ 
+            return res.render('login', {error:'Iniciá sesión/ registrate para comentar'})
+        }
+        // Set user from session user
+        req.body.user_id = req.session.user.id;
+        // Set book from url params
+        req.body.product_id = req.params.id;
+        db.comment.create(req.body)
+            .then(function () {
+                res.redirect('/products/detail/' + req.params.id)
+            })
+            .catch(function (error) {
+                res.send(error);
+            })
+        
+    },
+}
+
+module.exports = productController;
