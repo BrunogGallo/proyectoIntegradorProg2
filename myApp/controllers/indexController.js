@@ -72,12 +72,6 @@ const indexController = {
         })
     },
     
-    login: function (req, res) {
-        return res.render ('login',)
-    },
-    register: function (req, res) {
-        return res.render ('register')
-    },
 }
 // Exporto para usar los datos en otros archivos
 module.exports = indexController
