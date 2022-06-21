@@ -22,28 +22,35 @@
 	<!-- Novedades -->
 	<div class="container products-wrapper">
 		<div class="row">
-			<div class="col-12">
-				<h2 class="products-title">Novedades</h2>
-			</div>
 			<!-- Show the "ultimos" products -->
-			<!--Uso un for para recorrer el array de productos-->
-			<% for( let i = 0; i < datos.length; i++ ) { %>
-				<div class="col-12 col-sm-6 col-lg-3">
-					<section class="product-box">
-						<a href="/products">
-							<figure class="product-box_image">
-								<img src= <%= datos[i].imagen %>  alt=" <%= datos[i].nombreProducto %> ">
-							</figure>
-							<article class="product-box_data">
-								<h2> <%= datos[i].nombreProducto %> </h2>
-								<p>Subido por: <%=  datos[i].usuario.nombreUsuario %></p>
-								<p> <%= datos[i].descripcion %> </p>
-								<p>Comentarios: <%= datos[i].comentarios.length %> </p>
-							</article>
-						</a>
-					</section>
+			<% if (datos.length == 0) { %>
+				<div class="col-12">
+					<h2 class="products-title">No hay productos cargados</h2>
 				</div>
-			<% } %> 
+			<% } else { %>
+					<div class="col-12">
+						<h2 class="products-title">Novedades</h2>
+					</div>
+				<% for( let i = 0; i < datos.length; i++ ) { %>	<!--Uso un for para recorrer el array de productos-->
+
+					<div class="col-12 col-sm-6 col-lg-3">
+						<section class="product-box">
+							<a href="/products">
+								<figure class="product-box_image">
+									<img src= <%= datos[i].imagen %>  alt=" <%= datos[i].nombreProducto %> ">
+								</figure>
+
+								<article class="product-box_data">
+									<h2> <%= datos[i].nombreProducto %> </h2>
+									<p>Subido por: <a href="/users/profile"><%= datos[i].usuario.nombreUsuario %></a></p>
+									<p> <%= datos[i].descripcion %> </p>
+									<p>Comentarios: <%= datos[i].comentarios.length %> </p>
+								</article>
+							</a>
+						</section>
+					</div>
+				<% } %>
+			<% } %>  
 		</div>
 	</div>
 	<!-- /Novedades -->

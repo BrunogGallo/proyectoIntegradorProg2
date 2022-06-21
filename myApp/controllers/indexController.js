@@ -1,5 +1,6 @@
-//Almaceno en la variable db los datos q tengo en el archivo data db, uso los datos de info q estan en data en este archivo
-const db = require('../database/models')
+const db = require('../database/models') //Requiero los modelos de la base de datos y los almaceno en db
+const op = db.Sequelize.Op //Requiero los operadores de sequalize y los almaceno en op
+
 
 const indexController = {
     //Escribimos metodos, se encarga de manejar los requiest
@@ -10,7 +11,7 @@ const indexController = {
     // queremos que queremos enviar con la vista
     //los uso en funcion de comen
 
-    index: (req, res) => { //Puedo cambiar el nombre findAll, esto iria para el index
+    index: (req, res) => { 
 
         db.Producto.findAll({
             include: [{
@@ -24,11 +25,12 @@ const indexController = {
             ],
             order: [
                 ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
-            ]
+            ],
+            limit: 20 //Pongo un limite para la cantidad de datos que pueda traer el findall
         })
             .then((result) =>{
                 console.log(result);
-                return res.render ('index', {
+                return res.render ('index', { //Renderizo la vista almacenando los datos buscados bajo el nombre datos
                     datos: result
                 });
             })
@@ -39,45 +41,42 @@ const indexController = {
     },
 
     search: (req, res) => { //Este es para resultado de busquedas
-        let busqueda = req.query.search
-        productos.findAll({
-            where: [
-                {nombreProducto: { [op.like]: busqueda}}, 
-                {descripcion: {[op.like]: busqueda} }
-            ],
+        let busqueda = req.query.search //Capturo la busqueda del usuario en el form de la qs
+        db.Producto.findAll({
             include: [{
                 association: 'usuario' //Traemos los datos de usuario
-            }],
-            include:[{
+                }, {
                 association: 'comentarios', //Traemos los comentarios
-                include: [{
-                    association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
-                }]
-            }],
+                    include: {
+                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
+                    }
+                }],
+            where: {
+                [op.or]: [ //El operador or permite que busque tanto por descripcion como por nombre del producto
+                {'nombreProducto': {[op.like]: `%${busqueda}%`}}, //el operador like permite encontrar datos que se asemejen a la busqueda, sin estar restricto a datos que sean identos
+                {'descripcion': {[op.like]: `%${busqueda}%`}} 
+                ]
+            },
             order: [
                 ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
             ]
         })
         .then((result) =>{
+            console.log(result);
             return res.render ('search-results', {
-                datos: result
+                datos: result,
             });
+        })
+        .catch ((error) =>{
+            console.log(error);
         })
     },
     
-
-    search: function (req, res) {
-        return res.render ('search-results', {
-            'user': users,
-            'productos': productos,
-            'comentarios': comentarios
-        })
-    },
     login: function (req, res) {
         return res.render ('login',)
     },
     register: function (req, res) {
-        return res.render ('register', {'user': users})
+        return res.render ('register')
     },
 }
 // Exporto para usar los datos en otros archivos
