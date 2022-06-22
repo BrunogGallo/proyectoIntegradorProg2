@@ -28,7 +28,7 @@ const productController = {
         res.render('add_product');
     },
 
-    store: function (req, res) {
+    guardarProducto: function (req, res) {
         if (!req.session.user) {
             return res.render('add_product', { error: 'Not authorized.' });
         }
@@ -47,7 +47,7 @@ const productController = {
         //el path lo aclaramos nosotoros en la carpeta destin   ation en la ruta   
     },
 
-    delete: function (req, res) {
+    eliminarProducto: function (req, res) {
         if (!req.session.user) {
             throw Error('Not authorized.')
         } //chequear
@@ -60,7 +60,7 @@ const productController = {
             })
     },
 
-    edit: function (req, res) {
+    editarProducto: function (req, res) {
         db.products.findByPk(req.params.id)
             .then(function (products) {
                 res.render('product_edit', { products });
@@ -70,7 +70,7 @@ const productController = {
             })
     },
 
-    update: function (req, res) {
+    actualizarProducto: function (req, res) {
         if (req.file) req.body.img = (req.file.path).replace('public', '');
         db.products.update(req.body, { where: { id: req.params.id } })
             .then(function () {
@@ -81,7 +81,7 @@ const productController = {
             })
     },
 
-    comment: function (req, res) {
+    comentarioProducto: function (req, res) {
       
         if(!req.session.user){ 
             return res.render('login', {error:'Iniciá sesión/ registrate para comentar'})

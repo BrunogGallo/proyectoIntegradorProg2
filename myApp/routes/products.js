@@ -6,7 +6,16 @@ const productController = require ('../controllers/productController');
 
 router.get ('/detalles/id:?', productController.mostrarProducto)
 
-router.get ('/agregar', productController.agregarProducto)
+router.get ('/product-add', productController.agregarProducto)
 
-router.get ()
+router.get ('/guardarProducto', productController.guardarProducto)
+
+router.get ('', productController.eliminarProducto)
+
+router.get ('', productController.editarProducto)
+
+router.get ('', productController.actualizarProducto)
+
+router.get ('', productController.comentarioProducto)
+
 module.exports = router
