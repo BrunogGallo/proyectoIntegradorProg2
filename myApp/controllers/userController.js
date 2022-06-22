@@ -67,7 +67,7 @@ const userController = {
 
     },
     register : (req, res) => {
-        return res.render("registerUser",);
+        return res.render("register",);
     },
     procesarRegister : (req, res) => {
         let info = req.body;
@@ -77,21 +77,21 @@ const userController = {
         if (info.nombre == "") {
             errors.message = "El input de nombre esta vacio";
             res.locals.errors = errors;
-            return res.render('registerUser')
+            return res.render('register')
             
         } else if (info.email == ""){
             errors.message = "El input de email esta vacio";
             res.locals.errors = errors;
-            return res.render('registerUser')
+            return res.render('register')
 
         }  else if (info.contraseña == ""){
             errors.message = "El input de contraseña esta vacio";
             res.locals.errors = errors;
-            return res.render('registerUser')
+            return res.render('register')
 
         } else {
 
-            let contraseñaEncriptada = bcryptjs.hashSync(info.contraseña, 10);
+            let contraseñaEncriptada = bcryptjsg.hashSync(info.contraseña, 10);
             let fotoPerfil = req.file.filename;
 
             let userParaGuardar = {
@@ -108,13 +108,16 @@ const userController = {
 
             users.create(userParaGuardar)
             .then((result) => {
-                return res.redirect("/usuarios/login")
+                return res.redirect("/users/login")
             });
             
         }
 
-    }
+    },
 
+    logout: function (req, res) {
+        return res.render ('logout',)
+    },
 }
 
 module.exports = userController;
