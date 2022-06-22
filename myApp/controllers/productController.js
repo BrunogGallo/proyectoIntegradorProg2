@@ -33,9 +33,9 @@ const productController = {
         }
         req.body.user_id = req.session.user.id;
         if (req.file) req.body.img = (req.file.path).replace('public', '');
-        db.products.create(req.body)
+        productos.create(req.body)
             .then(function () {
-                res.redirect('/products') //Redirect redirecciona a un link, va con el /products/loquesea
+                res.redirect('/products/') //Redirect redirecciona a un link, va con el /products/loquesea
             })
             .catch(function (error) {
                 res.send(error);
@@ -60,7 +60,7 @@ const productController = {
     },
 
     editarProducto: function (req, res) {
-        db.products.findByPk(req.params.id)
+        productos.findByPk(req.params.id)
             .then(function (products) {
                 res.render('product_edit', { products }); 
             })
@@ -71,7 +71,7 @@ const productController = {
 
     actualizarProducto: function (req, res) {
         if (req.file) req.body.img = (req.file.path).replace('public', '');
-        db.products.update(req.body, { where: { id: req.params.id } })
+        productos.update(req.body, { where: { id: req.params.id } })
             .then(function () {
                 res.redirect('/')
             })
