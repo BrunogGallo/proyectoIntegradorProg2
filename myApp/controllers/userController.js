@@ -31,17 +31,17 @@ const userController = {
 
         }  else {
             users.findOne({
-                where : [{ email :  info.email}]
+                where : [{ email :  info.email}] //Uso el email para identificar al usuario, ya que es un dato unico
             }).then((result) => {
                 if (result != null) {
                     let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
                     if (claveCorrecta) {
-                        req.session.users = result.dataValues;
+                        req.session.user = result.dataValues;
     
                         /* Evaluar si el checkbox esta en true o existe */
     
                         if (req.body.remember != undefined) {
-                            res.cookie('userId', req.session.idUsuario, { maxAge : 1000 * 60 * 5})
+                            res.cookie('userId', req.session.user.id, { maxAge : 1000 * 60 * 5}) //Guardo en una cookie con nombre userId el id del usuario encontrado que ahora esta guardado en session
                         }
                        console.log(result.dataValues);
                         return res.redirect("/")
@@ -49,14 +49,14 @@ const userController = {
                         /* Este paso se ejecuta por cada validacion que queramos */
                         errors.message = "La clave es incorrecta"
                         res.locals.errors = errors;
-                        return res.redirect('/');
+                        return res.render('login');
                     }
                     
                 } else {
                     /* Este paso se ejecuta por cada validacion que queramos */
                     errors.message = "No existe el email " + info.email
                     res.locals.errors = errors;
-                    return res.redirect('/');
+                    return res.render('login');
                 }
             });
            
