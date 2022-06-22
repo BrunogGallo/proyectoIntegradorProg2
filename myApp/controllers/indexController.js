@@ -124,8 +124,7 @@ const indexController = {
                 apellido: datosNuevos.apellido,
                 email: datosNuevos.email,
                 nombreUsuario: datosNuevos.usuario,
-                fotoPerfil: fotoNueva,
-                contraseña: datosNuevos.contraseña
+                fotoPerfil: fotoNueva
             },{
                 where: [{id: idUsuario}]
             }
@@ -136,9 +135,20 @@ const indexController = {
         })
         .catch ((error) =>{
             console.log(error);
+        }) 
+    },
+    follow: (req, res) =>{
+        if (req.session.user == undefined) {
+            res.redirect ('/users/login')
+        } else {
+            idUsuario = req.params.id
+        db.Seguidor.findByPk(idUsuario)
+        .then ((result) =>{
+            
         })
-        
     }
+    }
+
     
 }
 // Exporto para usar los datos en otros archivos
