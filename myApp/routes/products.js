@@ -18,6 +18,6 @@ router.get ('/editar/:id', productController.editarProducto)
 
 router.post ('/editar/:id', productController.actualizarProducto)
 
-router.get ('/comentar', productController.comentar)
+router.post ('/comentar', productController.comentar)
 
 module.exports = router //
