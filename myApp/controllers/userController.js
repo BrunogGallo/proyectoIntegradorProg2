@@ -31,7 +31,7 @@ const userController = {
 
         }  else {
             users.findOne({
-                where : { email :  info.email}
+                where : [{ email :  info.email}]
             }).then((result) => {
                 if (result != null) {
                     let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
@@ -111,7 +111,7 @@ const userController = {
             console.log(userParaGuardar)
             users.create(userParaGuardar)
             .then((result) => {
-                return result.redirect("/users")
+                return result.redirect("/users/login")
             });
             
         }
