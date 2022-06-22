@@ -27,17 +27,18 @@
 				<article class="col-12 col-lg-8 product-detail-info">
 					<img src= <%= datosProducto.imagen %> alt="" class="product-detail-img">
 					<p class="product-detail-description"> <%= datosProducto.descripcion %> </p>
+					<p class="product-detail-description"> Subido por: <a href="/users/profile/<%= datosProducto.usuario.id %> " class= "usuario"> <%= datosProducto.usuario.nombre %> <%= datosProducto.usuario.apellido %> </a> </p>
 				</article>
 
 				<div class="col-12 col-lg-4">
 					<section class="comments">
-						<% for( let i = 0; i < datosProducto.comentarios[i].length; i++ ) { %>
+						<% for( let i = 0; i < datosProducto.comentarios.length; i++ ) { %>
 
 							<article>
-								<img src= <%= datosProducto.comentarios[i].imagen %> alt="Foto de Perfil">
+								<img src= "<%= datosProducto.comentarios[i].comentarioUsuario.fotoPerfil %>" alt="Foto de Perfil">
 								<div class="data">
 									<p class="user">
-										<strong> <a href="/users/profile"> <%= datosProducto.comentarios[i].idUsuario %> </a> </strong>
+										<strong> <a href="/users/profile/<%= datosProducto.comentarios[i].comentarioUsuario.id %> "> <%= datosProducto.comentarios[i].comentarioUsuario.nombre %> <%= datosProducto.comentarios[i].comentarioUsuario.apellido %></a> </strong>
 										<%= datosProducto.comentarios[i].texto %> 
 									</p>
 								</div>

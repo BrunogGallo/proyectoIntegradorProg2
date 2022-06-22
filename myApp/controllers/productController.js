@@ -11,7 +11,7 @@ const productController = {
     mostrarProducto: function (req, res) {
         productos.findByPk(req.params.id, { include: { all: true, nested: true } })
             .then(function (product) {
-                console.log(product.dataValues);
+                console.log(product.dataValues.usuario.nombre);
                 res.render('products', {datosProducto: product }); //render es renderizar la VISTA
             })
             .catch(function (error) {
