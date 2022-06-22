@@ -73,7 +73,7 @@ const indexController = {
     },
 
     profile: (req, res) => {
-        idUsuario = req .params.id
+        idUsuario = req.params.id
         db.Usuario.findByPk(idUsuario, {
             include: [{
                 association: 'seguidor'

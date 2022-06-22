@@ -29,7 +29,7 @@ router.post('/register', upload.single('fotoPerfil') , userController.procesarRe
 router.get('/login', userController.login);
 router.post ('/login', userController.procesarLogin);
 
-router.get('/logout', userController.logout);
+router.post('/logout', userController.logout);
 
 
 

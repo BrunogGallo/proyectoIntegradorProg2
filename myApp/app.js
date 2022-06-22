@@ -33,8 +33,9 @@ app.use (session({
 
 //Middleware de session guardado en locals
 app.use(function(req, res, next) {
-  if (req.session.usuarioLogueado != undefined) {
-      res.locals.user = req.session.usuarioLogueado
+   if (req.session.usuarioLogueado != undefined) 
+  {
+      res.locals.user = req.session.usuarioLogueado;
   }
   return next();
 })
