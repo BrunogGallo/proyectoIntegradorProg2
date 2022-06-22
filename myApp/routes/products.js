@@ -1,10 +1,12 @@
 //Importamos cheeck
-const express = require('express'); //
-const router = express.Router();
+const express = require('express'); //tenemos que requerir al modulo tercero que es express 
+const router = express.Router(); //voy a estar utilizando un m'etodo que tiene ese objeto. el metodo es router.
+ //dice, del objeto express quiero solicitarleun metodo. 
 
 const productController = require ('../controllers/productController'); //
 
-router.get ('/detalles/:id', productController.mostrarProducto) //
+
+router.get ('/detalles/:id', productController.mostrarProducto) //recibe un producto se va a encargar de la ejecucion de la pantalla productController
 
 router.get ('/agregar', productController.agregarProducto) //
 

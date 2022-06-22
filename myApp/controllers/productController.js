@@ -21,9 +21,9 @@ const productController = {
     },
 
     agregarProducto: function (req, res) {
-        if (!req.session.user) {
-            throw Error('Not authorized.')
-        }
+       // if (!req.session.user) {
+         //   throw Error('Not authorized.')
+       // }
         res.render('product-add');
     },
 
