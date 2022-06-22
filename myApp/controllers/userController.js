@@ -4,7 +4,7 @@ const users = db.User
 const productos = db.Producto
 const comentarios = db.Comentario
 //Requiriendo el modulo de bcryptjs-->libreria de node, que es para ecriptar las contra.
-const bcryptjs = require('bcryptjs')
+const bcrypt = require('bcrypt')
 
 const userController = {
     login: function (req, res) {
@@ -12,7 +12,7 @@ const userController = {
     },
 
     procesarLogin: function (req, res) {
-    
+        
         let info = req.body;
         let errors = {};
         if (info.email == "") {
@@ -30,7 +30,7 @@ const userController = {
                 where : { email :  info.email}
             }).then((result) => {
                 if (result != null) {
-                    let claveCorrecta = bcryptjs.compareSync(info.contraseña  , result.contraseña )
+                    let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
                     if (claveCorrecta) {
                         req.session.users = result.dataValues;
     
@@ -70,7 +70,7 @@ const userController = {
         let info = req.body;
         /* validaciones del form */
         let errors = {};
-
+        console.log(info.usuario[0])
         if (info.nombre == "") {
             errors.message = "El input de nombre esta vacio";
             res.locals.errors = errors;
@@ -81,31 +81,33 @@ const userController = {
             res.locals.errors = errors;
             return res.render('register')
 
-        }  else if (info.contraseña == ""){
+        }  else if (info.contrasenia == ""){
             errors.message = "El input de contraseña esta vacio";
             res.locals.errors = errors;
             return res.render('register')
 
-        } else {
-
-            let contraseñaEncriptada = bcryptjsg.hashSync(info.contraseña, 10);
+        }
+        else {
+           
+            let contraseñaEncriptada = bcrypt.hashSync(info.contrasenia, 10);
             let fotoPerfil = req.file.filename;
-
+           
             let userParaGuardar = {
         
-                nombre : info.nombre,
-                apellido: info.apellido,
+                nombre : info.usuario[0],
+                apellido: info.usuario[1],
                 email : info.email,
                 contraseña : contraseñaEncriptada,
                 remember_token: "false",
                 createdAt : new Date(),
                 updatedAt : new Date(),
-                fotoPerfil : fotoPerfil
-            }
+                fotoPerfil : fotoPerfil,
 
+            }
+            console.log(userParaGuardar)
             users.create(userParaGuardar)
             .then((result) => {
-                return res.redirect("/users/login")
+                return result.redirect("/users")
             });
             
         }
@@ -113,5 +115,6 @@ const userController = {
     }
 
 }
+
 
 module.exports = userController;
