@@ -1,14 +1,13 @@
 const db = require('../database/models')
 
-const users = db.User
+const users = db.Usuario
 const productos = db.Producto
 const comentarios = db.Comentario
 //Requiriendo el modulo de bcryptjs-->libreria de node, que es para ecriptar las contra.
-<<<<<<< HEAD
-const bcrypt = require('bcrypts')
-=======
+
+const bcrypt = require('bcryptjs')
+
 //const bcrypt = require('bcrypt')
->>>>>>> 95f8d3f8bd11ead7d9e7b320b1202e43d84faa07
 
 const userController = {
     login: function (req, res) {
@@ -98,9 +97,11 @@ const userController = {
            
             let userParaGuardar = {
         
-                nombre : info.usuario[0],
-                apellido: info.usuario[1],
+                nombre : info.nombre,
+                apellido: info.apellido,
                 email : info.email,
+                nombreUsuario : info.usuario,
+                fechaNacimiento : info.fechaNacimiento,
                 contraseña : contraseñaEncriptada,
                 remember_token: "false",
                 createdAt : new Date(),
@@ -109,9 +110,9 @@ const userController = {
 
             }
             console.log(userParaGuardar)
-            users.create(userParaGuardar)
+            users.create({userParaGuardar})
             .then((result) => {
-                return result.redirect("/users/login")
+                return result.redirect("/")
             });
             
         }
