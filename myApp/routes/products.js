@@ -8,14 +8,14 @@ router.get ('/detalles/id:?', productController.mostrarProducto)
 
 router.get ('/product-add', productController.agregarProducto)
 
-router.get ('/guardarProducto', productController.guardarProducto)
+router.post ('/product-add', productController.guardarProducto)
 
-router.get ('', productController.eliminarProducto)
+router.get ('profile-edit', productController.eliminarProducto)
 
-router.get ('', productController.editarProducto)
+router.get ('/product', productController.editarProducto)
 
-router.get ('', productController.actualizarProducto)
+router.post ('/product', productController.actualizarProducto)
 
-router.get ('', productController.comentarioProducto)
+router.get ('/', productController.comentarioProducto)
 
 module.exports = router
