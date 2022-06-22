@@ -94,9 +94,8 @@ const userController = {
            
             let contraseñaEncriptada = bcrypt.hashSync(info.contrasenia, 10);
             let fotoPerfil = req.file.filename;
-           
-            let userParaGuardar = {
-        
+                
+            users.create({
                 nombre : info.nombre,
                 apellido: info.apellido,
                 email : info.email,
@@ -107,12 +106,10 @@ const userController = {
                 createdAt : new Date(),
                 updatedAt : new Date(),
                 fotoPerfil : fotoPerfil,
-
-            }
-            console.log(userParaGuardar)
-            users.create({userParaGuardar})
+            })
             .then((result) => {
-                return result.redirect("/")
+                console.log(result)
+                return res.redirect("/")
             });
             
         }

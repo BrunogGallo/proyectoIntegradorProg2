@@ -148,7 +148,6 @@ const indexController = {
         })
         .then ((result) =>{
             return res.redirect('/profile/:' + idUsuario, {
-            loSigue: true
             })
         })
     }
