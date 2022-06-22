@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs')
 
 const userController = {
     login: function (req, res) {
+      
         return res.render ('login', {title: 'login'})
     },
 
@@ -43,19 +44,19 @@ const userController = {
                             res.cookie('userId', req.session.idUsuario, { maxAge : 1000 * 60 * 5})
                         }
                        
-                        return res.redirect("/productos/all")
+                        return res.redirect("/")
                     } else {
                         /* Este paso se ejecuta por cada validacion que queramos */
                         errors.message = "La clave es incorrecta"
                         res.locals.errors = errors;
-                        return res.render('login');
+                        return res.redirect('/');
                     }
                     
                 } else {
                     /* Este paso se ejecuta por cada validacion que queramos */
                     errors.message = "No existe el email " + info.email
                     res.locals.errors = errors;
-                    return res.render('login');
+                    return res.redirect('/');
                 }
             });
            
