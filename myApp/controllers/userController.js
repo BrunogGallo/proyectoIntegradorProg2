@@ -4,7 +4,7 @@ const users = db.User
 const productos = db.Producto
 const comentarios = db.Comentario
 //Requiriendo el modulo de bcryptjs-->libreria de node, que es para ecriptar las contra.
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypts')
 
 const userController = {
     login: function (req, res) {
