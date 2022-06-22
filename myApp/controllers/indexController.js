@@ -73,7 +73,7 @@ const indexController = {
     },
 
     profile: (req, res) => {
-        idUsuario = req.params.id
+        idUsuario = req .params.id
         db.Usuario.findByPk(idUsuario, {
             include: [{
                 association: 'seguidor'
@@ -172,3 +172,15 @@ const indexController = {
 }
 // Exporto para usar los datos en otros archivos
 module.exports = indexController
+
+
+//Para pegar en profile
+// <% if (idSeguidor: req.session.user.id && idSeguido: req.params.id) { %>
+//     <form action="/dejarDeSeguir/:<%= datos.id %>" method="POST"> 
+//         <button class="btn mt-3 ml-4" type="submit">Dejar de</a>
+//     </form>
+// <% } else {%>
+//     <form action="/seguir/:<%= datos.id %>" method="POST"> 
+//         <button class="btn mt-3 ml-4" type="submit">Seguir</a>
+//     </form>
+// <% } %> 

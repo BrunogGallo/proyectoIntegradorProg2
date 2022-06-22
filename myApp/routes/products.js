@@ -1,12 +1,12 @@
 //Importamos cheeck
-const express = require('express');
+const express = require('express'); //
 const router = express.Router();
 
-const productController = require ('../controllers/productController');
+const productController = require ('../controllers/productController'); //
 
-router.get ('/detalles/:id', productController.mostrarProducto)
+router.get ('/detalles/:id', productController.mostrarProducto) //
 
-router.get ('/agregar', productController.agregarProducto)
+router.get ('/agregar/', productController.agregarProducto) //
 
 router.post ('/agregar/', productController.guardarProducto)
 
@@ -18,4 +18,4 @@ router.post ('/editar', productController.actualizarProducto)
 
 router.get ('/comentar', productController.comentar)
 
-module.exports = router
+module.exports = router //

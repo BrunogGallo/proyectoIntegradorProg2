@@ -1,4 +1,4 @@
-const db = require('../database/models'); //requerimos los modelos. requerimos la conexion a la base de datos y los modelos creados. 
+const db = require('../database/models'); //requerimos la conexion a la base de datos y los modelos creados. 
 //cuando queremos filtrar por criterios que no sea  igualdad necesitamos utilizar los operadores de sequelize, en este caso const db = require
 
 const users = db.Usuario //el alias que le pondre a mi modelo
@@ -12,7 +12,7 @@ const productController = {
         productos.findByPk(req.params.id, { include: { all: true, nested: true } })
             .then(function (product) {
                 console.log(product.dataValues);
-                res.render('products', { product }); //render es renderizar la VISTA
+                res.render('products', {datosProducto: product }); //render es renderizar la VISTA
             })
             .catch(function (error) {
                 console.log(req.params.id)
@@ -29,13 +29,13 @@ const productController = {
 
     guardarProducto: function (req, res) {
         if (!req.session.user) {
-            return res.render('add_product', { error: 'Not authorized.' });
+            return res.render('product-add', { error: 'Not authorized.' });
         }
         req.body.user_id = req.session.user.id;
         if (req.file) req.body.img = (req.file.path).replace('public', '');
         productos.create(req.body)
             .then(function () {
-                res.redirect('/products/') //Redirect redirecciona a un link, va con el /products/loquesea
+                res.redirect('/products/:') //Redirect redirecciona a un link, va con el /products/loquesea
             })
             .catch(function (error) {
                 res.send(error);
@@ -62,7 +62,7 @@ const productController = {
     editarProducto: function (req, res) {
         productos.findByPk(req.params.id)
             .then(function (products) {
-                res.render('product_edit', { products }); 
+                res.render('product-edit ', { products }); 
             })
             .catch(function (error) {
                 res.send(error);
@@ -73,7 +73,7 @@ const productController = {
         if (req.file) req.body.img = (req.file.path).replace('public', '');
         productos.update(req.body, { where: { id: req.params.id } })
             .then(function () {
-                res.redirect('/')
+                res.redirect('/' + req.params.id)
             })
             .catch(function (error) {
                 res.send(error);
