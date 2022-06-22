@@ -27,11 +27,9 @@
 							<i class="fas fa-cog"></i>
 						</a>
 					</h1>
-					<% if (condition) { %>
-					 
-					<% } %>
-					<form action="" method="POST"></form>
-					<a class="btn mt-3 ml-4" href="">SEGUIR</a>
+						<form action="/seguir/:<%= datos.id %>" method="POST"> 
+							<button class="btn mt-3 ml-4" type="submit">Seguir</a>
+						</form>
 				</div>
 				<div>
 					<ul class="">
@@ -53,24 +51,28 @@
 				<h2 class="products-title">Productos (<%= datos.productos.length %>) </h2>
 			</div>
 			<!-- Show mis productos -->
-			<% for( let i = 0; i < datos.productos.length; i++ ) { %>
+			<% if (datos.productos.length == undefined) { %>
+				<h2>No hay ningun proudcto</h2>
+			<% } else {%>
 
-				<div class="col-12 col-sm-6 col-lg-3">
-					<section class="product-box">
-						<a href="/products">
-							<figure class="product-box_image">
-								<img src= <%= datos.productos[i].imagen %>  alt="<%= datos.productos[i].nombreProducto %>">
-							</figure>
-							<article class="product-box_data">
-								<h2> <%= datos.productos[i].nombreProducto %> </h2>
-								<p> <%= datos.productos[i].descripcion %> </p>
-								<p>Comentarios: <%= datos.comentarios.length %> </p>
-							</article>
-						</a>
-					</section>
-				</div>
-
-			<% } %>
+				<% for( let i = 0; i < datos.productos.length; i++ ) { %>
+					<div class="col-12 col-sm-6 col-lg-3">
+						<section class="product-box">
+							<a href="/products/detalles/<%= datos.productos[i].id %> ">
+								<figure class="product-box_image">
+									<img src= <%= datos.productos[i].imagen %>  alt="<%= datos.productos[i].nombreProducto %>">
+								</figure>
+								<article class="product-box_data">
+									<h2> <%= datos.productos[i].nombreProducto %> </h2>
+									<p> <%= datos.productos[i].descripcion %> </p>
+									<p>Comentarios: <%= datos.comentarios.length %> </p>
+								</article>
+							</a>
+						</section>
+					</div>
+				<% } %>
+				
+			<% } %> 
 		</div>
 	</div>
 	<!-- /Mis productos -->
