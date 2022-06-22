@@ -8,7 +8,7 @@ router.get ('/detalles/:id', productController.mostrarProducto)
 
 router.get ('/agregar', productController.agregarProducto)
 
-router.post ('/agregar', productController.guardarProducto)
+router.post ('/agregar/', productController.guardarProducto)
 
 router.post ('/eliminar', productController.eliminarProducto)
 

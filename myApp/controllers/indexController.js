@@ -141,12 +141,31 @@ const indexController = {
         if (req.session.user == undefined) {
             res.redirect ('/users/login')
         } else {
-            idUsuario = req.params.id
-        db.Seguidor.findByPk(idUsuario)
+        idUsuario = req.params.id
+        db.Seguidor.create({
+            idSeguidor: req.session.userr.id,
+            idSeguido: idUsuario
+        })
         .then ((result) =>{
-            
+            return res.redirect('/profile/:' + idUsuario, {
+            loSigue: true
+            })
         })
     }
+    },
+    unfollow: (req, res) =>{
+        idUsuario = req.params.id
+        db.Seguidor.destroy({
+            where: {
+                [op.and]: [
+                    {idSeguidor: req.session.userr.id},
+                    {idSeguido: idUsuario}
+                ]
+            }
+        })
+        .then ((result) =>{
+            return res.redirect ('/profile/:' + idUsuario)
+        })
     }
 
     
