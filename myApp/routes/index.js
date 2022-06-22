@@ -32,6 +32,6 @@ router.post ('/profileEdit/:id', upload.single('fotoPerfil'), indexController.pr
 
 router.post ('/seguir/:id', indexController.follow)
 
-//router.post ('/dejarDeSeguir/:id', indexController.unfollow)
+router.post ('/dejarDeSeguir/:id', indexController.unfollow)
 
 module.exports = router;
