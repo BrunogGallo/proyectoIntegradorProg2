@@ -31,14 +31,14 @@
 
 				<div class="col-12 col-lg-4">
 					<section class="comments">
-						<% for( let i = 0; i < comentarios.length; i++ ) { %>
+						<% for( let i = 0; i < datosProducto.comentarios[i].length; i++ ) { %>
 
 							<article>
-								<img src= <%= comentarios[i].imagen %> alt="Foto de Perfil">
+								<img src= <%= datosProducto.comentarios[i].imagen %> alt="Foto de Perfil">
 								<div class="data">
 									<p class="user">
-										<strong> <a href="/users/profile"> <%= comentarios[i].nombreUsuario %> </a> </strong>
-										<%= comentarios[i].texto %> 
+										<strong> <a href="/users/profile"> <%= datosProducto.comentarios[i].idUsuario %> </a> </strong>
+										<%= datosProducto.comentarios[i].texto %> 
 									</p>
 								</div>
 							</article>
