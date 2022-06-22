@@ -4,7 +4,11 @@ const users = db.User
 const productos = db.Producto
 const comentarios = db.Comentario
 //Requiriendo el modulo de bcryptjs-->libreria de node, que es para ecriptar las contra.
+<<<<<<< HEAD
+const bcrypt = require('bcrypts')
+=======
 //const bcrypt = require('bcrypt')
+>>>>>>> 95f8d3f8bd11ead7d9e7b320b1202e43d84faa07
 
 const userController = {
     login: function (req, res) {
@@ -27,7 +31,7 @@ const userController = {
 
         }  else {
             users.findOne({
-                where : { email :  info.email}
+                where : [{ email :  info.email}]
             }).then((result) => {
                 if (result != null) {
                     let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
@@ -107,7 +111,7 @@ const userController = {
             console.log(userParaGuardar)
             users.create(userParaGuardar)
             .then((result) => {
-                return result.redirect("/users")
+                return result.redirect("/users/login")
             });
             
         }
