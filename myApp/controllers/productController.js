@@ -33,9 +33,9 @@ const productController = {
         }
         req.body.user_id = req.session.user.id;
         if (req.file) req.body.img = (req.file.path).replace('public', '');
-        productos.create(req.body)
+        productos.create(req.body) //en la tabla productos creá todos estos productos 
             .then(function () {
-                res.redirect('/products/:') //Redirect redirecciona a un link, va con el /products/loquesea
+                res.redirect('/') //Redirect redirecciona a un link, va con el /products/loquesea
             })
             .catch(function (error) {
                 res.send(error);
@@ -50,7 +50,8 @@ const productController = {
         if (!req.session.user) {
             throw Error('Not authorized.')
         } //chequear
-        productos.destroy({ where: { id: req.params.id } })
+        productos.destroy({ where: { id: req.params.id } }) //de la tabla productos, borrá el que tiene este id
+                                                           //el cual sería el req.params.id, una vez q lo borra me lleva a la home 
             .then(function () {
                 res.redirect('/')
             })
@@ -62,7 +63,7 @@ const productController = {
     editarProducto: function (req, res) {
         productos.findByPk(req.params.id)
             .then(function (products) {
-                res.render('product-edit ', { products }); 
+                res.render('product-edit', { products }); 
             })
             .catch(function (error) {
                 res.send(error);
@@ -73,7 +74,7 @@ const productController = {
         if (req.file) req.body.img = (req.file.path).replace('public', '');
         productos.update(req.body, { where: { id: req.params.id } })
             .then(function () {
-                res.redirect('/' + req.params.id)
+                res.redirect('/products/detalles/' + req.params.id)
             })
             .catch(function (error) {
                 res.send(error);
