@@ -23,18 +23,14 @@ let storage = multer.diskStorage({
 let upload = multer({ storage : storage})
 
 /*Get users listing*/
-router.get ('/register', userController.register)
-
+router.get ('/register', userController.register);
 router.post('/register', upload.single('fotoPerfil') , userController.procesarRegister);
 
-router.get('/login', userController.login)
+router.get('/login', userController.login);
+router.post ('/login', userController.procesarLogin);
 
+router.get('/logout', userController.logout);
 
-router.post ('/register', userController.procesarRegister)
-
-router.post ('/edit', userController.procesarLogin)
-
-router.get('/logout', userController.logout)
 
 
 
