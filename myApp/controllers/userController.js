@@ -43,7 +43,7 @@ const userController = {
                         if (req.body.remember != undefined) {
                             res.cookie('userId', req.session.idUsuario, { maxAge : 1000 * 60 * 5})
                         }
-                       console.log(result.dataValues);
+                       
                         return res.redirect("/")
                     } else {
                         /* Este paso se ejecuta por cada validacion que queramos */
