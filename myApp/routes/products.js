@@ -34,7 +34,7 @@ router.get ('/editar/:id', productController.editarProducto)
 
 router.post ('/editar/:id', productController.actualizarProducto) 
 
-router.post ('/comentar', productController.comentar)
+router.post ('/comentar/:id', productController.comentar)
 
 module.exports = router //lo exportamos para que sea utilizado, para que otro archivo lo utilize 
 //el que va a utilizarlo es el entry point, es el archivo base de toda mi aplicacion 

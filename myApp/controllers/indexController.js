@@ -18,9 +18,6 @@ const indexController = {
                 association: 'usuario' //Traemos los datos de usuario
                 }, {
                 association: 'comentarios', //Traemos los comentarios
-                    include: {
-                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
-                    }
                 }
             ],
             order: [
@@ -47,9 +44,6 @@ const indexController = {
                 association: 'usuario' //Traemos los datos de usuario asociados a cada producto
                 }, {
                 association: 'comentarios', //Traemos los comentarios asociados a cada producto
-                    include: {
-                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
-                    }
                 }],
             where: {
                 [op.or]: [ //El operador or permite que busque tanto por descripcion como por nombre del producto

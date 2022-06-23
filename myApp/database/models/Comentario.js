@@ -1,6 +1,6 @@
 module.exports = function (sequelize, dataTypes){
 
-    let alias = 'Comentario'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
+    let alias = 'Comentario'; //Sequelie utiliza este alias para identificar al modelo
 
     let cols = {
         id: {

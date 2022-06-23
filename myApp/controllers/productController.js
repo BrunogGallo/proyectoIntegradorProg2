@@ -106,7 +106,7 @@ const productController = {
             texto: texto
         })
             .then(function () {
-                res.render('/products/detalles/' + req.params.id)
+                res.redirect('/products/detalles/' + req.params.id)
             })
             .catch(function (error) {
                 res.send(error);
