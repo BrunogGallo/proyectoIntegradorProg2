@@ -75,7 +75,7 @@ const indexController = {
             },{
                 association: 'seguido'
             }, {
-                association: 'carlitos',
+                association: 'productos', //Ademas de usar el nombre de la relacion que llamamos en modelos, tambien debo usarlo en las vistas
                 order: ['createdAt', 'DESC']
             }, {
                 association: 'comentarios',

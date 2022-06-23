@@ -32,7 +32,7 @@ router.post ('/borrar/:id', productController.eliminarProducto) //id tiene dos p
 
 router.get ('/editar/:id', productController.editarProducto)
 
-router.post ('/editar/:id', productController.actualizarProducto) 
+router.post ('/editar/:id', upload.single('imagen'), productController.actualizarProducto) 
 
 router.post ('/comentar/:id', productController.comentar)
 

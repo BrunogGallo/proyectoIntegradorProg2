@@ -20,16 +20,15 @@ const productController = {
     },
 
     agregarProducto: function (req, res) {
-         if (!req.session.user) { 
-            throw Error('Not authorized.')
+        if(req.session.user == undefined){  
+            return res.redirect('/users/login') 
         }
         res.render('product-add');
     },
 
     guardarProducto: function (req, res) {
-        if (!req.session.user) {        //si en el objeto request hay una propiedad llamada session y esa propiedad sesson
-                                        //tiene ademas adentro una propiedad user, si existe por favor redirigero a la pagina que quiere ver el susuario
-        return res.render('login');     //si no esta en sesion el usuario, quiero que lo renderises y lo envies al login
+        if(req.session.user == undefined){  
+            return res.redirect('/users/login') 
         }
 
         idProducto = req.params.id //almaceno el id que viene con la url
@@ -58,13 +57,20 @@ const productController = {
     },
 
     eliminarProducto: function (req, res) {
-        if (!req.session.user) {
-            throw Error('Not authorized.')
-        } 
-        db.Producto.destroy({ where: { id: req.params.id } }) //de la tabla productos, borrá el que tiene este id
-                                                           //el cual sería el req.params.id, una vez q lo borra me lleva a la home 
+        if(req.session.user == undefined){  
+            return res.redirect('/users/login') 
+        }
+        idProducto = req.params.id
+        db.Comentario.destroy( //Elimino los comentarios relacionados al producto, ya que si no lo hacemos no podemos borrar el producto
+            {where: {idProducto: idProducto}}
+            )
+            .then ((result) =>{
+                db.Producto.destroy(
+                { where: { id: idProducto} }
+                )
+            })
             .then(function () {
-                res.redirect('/')
+                res.redirect('/profile/' + req.session.user.id)
             })
             .catch(function (error) {
                 res.send(error);
@@ -72,7 +78,11 @@ const productController = {
     },
 
     editarProducto: function (req, res) {
-        db.Producto.findByPk(req.params.id)
+        if(req.session.user == undefined){  
+            return res.redirect('/users/login') 
+        }
+        idProducto = req.params.id
+        db.Producto.findByPk(idProducto)
             .then(function (products) {
                 res.render('product-edit', { products }); 
             })
@@ -82,14 +92,44 @@ const productController = {
     },
 
     actualizarProducto: function (req, res) {
-        if (req.file) req.body.img = (req.file.path).replace('public', '');
-        db.Producto.update(req.body, { where: { id: req.params.id } })
-            .then(function () {
-                res.redirect('/products/detalles/' + req.params.id)
+        if(req.session.user == undefined){  
+            return res.redirect('/users/login') 
+        }
+
+        idProducto = req.params.id
+        datosNuevos = req.body
+        idUsuario = req.session.user.id
+        if (req.file == undefined) { //En el caso de que el usuario no haya subido una foto nueva
+            db.Producto.update({
+                nombreProducto: datosNuevos.nombreProducto,
+                descripcion: datosNuevos.descripcion,
+                idUsuario: idUsuario
+            }, {
+                where: [{id: idProducto}]
             })
-            .catch(function (error) {
-                res.send(error);
+                .then ((result) =>{
+                    res.redirect('/products/detalles/' + idProducto)
+                })
+                    .catch ((error) =>{
+                        console.log(error);
+                    })
+        } else { //En el caso de que incluya una foto nueva
+            fotoNueva = req.file.filename; 
+            db.Producto.update({
+                nombreProducto: datosNuevos.nombreProducto,
+                imagen: fotoNueva,
+                descripcion: datosNuevos.descripcion,
+                idUsuario: idUsuario
+            }, {
+                where: [{id: idProducto}]
             })
+                .then ((result) =>{
+                    res.redirect('/products/detalles/' + idProducto)
+                })
+                    .catch ((error) =>{
+                        console.log(error);
+                    })
+        }
     },
 
     comentar: function (req, res) {
@@ -105,11 +145,11 @@ const productController = {
             idProducto: idProducto,
             texto: texto
         })
-            .then(function () {
-                res.redirect('/products/detalles/' + req.params.id)
+            .then ((result) =>{
+                res.redirect('/products/detalles/' + idProducto)
             })
-            .catch(function (error) {
-                res.send(error);
+            .catch ((error) =>{
+                res.send(error)
             })
         
     },
