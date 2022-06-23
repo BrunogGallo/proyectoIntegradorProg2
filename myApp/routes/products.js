@@ -19,14 +19,14 @@ let storage = multer.diskStorage({
     }
 });
 
-let upload = multer({ storage : storage})
+let upload = multer({ storage : storage}) //hacemos upload multer y declaramos una variable donde usamos multer y ponemos una destination. es a donde queremos que se guarde esa img. 
 
 
 router.get ('/detalles/:id', productController.mostrarProducto) //recibe un producto se va a encargar de la ejecucion de la pantalla productController
 
 router.get ('/agregar', productController.agregarProducto) //
 
-router.post ('/agregar', upload.single('imagen'), productController.guardarProducto)
+router.post ('/agregar', upload.single('imagen'), productController.guardarProducto) //con el metodo post maneja los datos de agregar producto
 
 router.post ('/borrar/:id', productController.eliminarProducto) //id tiene dos puntos, cuando le indicamos que tiene dos puntos, es que estoy esperando un parametro. si no tiene dos puntos entonces es un componente mas. 
 

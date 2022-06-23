@@ -24,7 +24,7 @@ let upload = multer({ storage : storage})
 
 /*Get users listing*/
 router.get ('/register', userController.register);
-router.post('/register', upload.single('fotoPerfil') , userController.procesarRegister);
+router.post('/register', upload.single('fotoPerfil') , userController.procesarRegister); //con el metodo post maneja los datos de agregar producto
 
 router.get('/login', userController.login);
 router.post ('/login', userController.procesarLogin);

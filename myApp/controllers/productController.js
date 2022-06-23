@@ -20,19 +20,22 @@ const productController = {
     },
 
     agregarProducto: function (req, res) {
-         if (!req.session.user) {
+         if (!req.session.user) { 
             throw Error('Not authorized.')
         }
         res.render('product-add');
     },
 
     guardarProducto: function (req, res) {
-        if (!req.session.user) {
-            return res.render('login');
+        if (!req.session.user) {        //si en el objeto request hay una propiedad llamada session y esa propiedad sesson
+                                        //tiene ademas adentro una propiedad user, si existe por favor redirigero a la pagina que quiere ver el susuario
+        return res.render('login');     //si no esta en sesion el usuario, quiero que lo renderises y lo envies al login
         }
+
         idProducto = req.params.id //almaceno el id que viene con la url
         idUsuario = req.session.user.id //almaceno el id del usuario que esta logeado
         datosProducto = req.body //extraigo los datos del form
+
         if (req.file == undefined) { //en el caso de que el usuario no haya guardado foto
             fotoProducto = null
         } else {
@@ -57,7 +60,7 @@ const productController = {
     eliminarProducto: function (req, res) {
         if (!req.session.user) {
             throw Error('Not authorized.')
-        } //chequear
+        } 
         db.Producto.destroy({ where: { id: req.params.id } }) //de la tabla productos, borrá el que tiene este id
                                                            //el cual sería el req.params.id, una vez q lo borra me lleva a la home 
             .then(function () {
@@ -91,8 +94,8 @@ const productController = {
 
     comentar: function (req, res) {
       
-        if(req.session.user == undefined){ 
-            return res.redirect('/users/login')
+        if(req.session.user == undefined){  //unicamente los usuarios logueados puedan comentar 
+            return res.redirect('/users/login') //sino, me va redirigir a otro lado 
         }
         texto = req.body.texto
         idUsuario= req.session.user.id;
