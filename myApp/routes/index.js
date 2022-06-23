@@ -1,6 +1,5 @@
 //Imp. 
 const express = require('express');
-const { index } = require('../controllers/indexController');
 const router = express.Router();
 const indexController = require ('../controllers/indexController');
 
