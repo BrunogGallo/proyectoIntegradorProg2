@@ -4,10 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-//Requiero express para poder implementarlo 
+//Requiero express para poder implementarlo y db para acceder a los modelos 
 const session = require('express-session');
 const db = require("./database/models");
 
+//Declaro routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const productsRouter = require('./routes/products')
@@ -33,32 +34,28 @@ app.use (session({
 
 //Middleware de session guardado en locals
 app.use(function(req, res, next) {
-   if (req.session.usuarioLogueado != undefined) 
+   if (req.session.user != undefined) //Chequeo si hay un usuario logeado
   {
-      res.locals.user = req.session.usuarioLogueado;
+      res.locals.user = req.session.user; //Declaro res.locals para poder utilizar los datos del usuario
   }
   return next();
 })
 
 //Middleware cookies
 app.use(function (req, res, next) {
-  if (req.cookies.userId != undefined && req.session.usuarioLogueado == undefined) {
-    let idUsuario = req.cookies.userId;
+  if (req.cookies.userId != undefined && req.session.user == undefined) { //Si hay un user en cookies pero session esta vacio
+    let idUsuario = req.cookies.userId; //Almaceno el id de cookies
 
-    db.User.findByPk(idUsuario)
-    .then ((user) => {
-      req.session.usuarioLogueado = user.dataValues;
-      res.locals.user = user.dataValues;
+    db.Usuario.findByPk(idUsuario) //Busco el usuario usando ese id
+    .then ((result) => {
+      req.session.user = result; //Guardo el resultado en session y en locals
       return next();
     }).catch((error) => {
       console.log(error);
     });
-
-  } else {
-    return next ()
   }
-
-})
+    return next ()
+  })
 
 //Declaro los 3 prefijos, /indexrouter index router, requiero las rutas 
 //app.use es un metodo que recibe 2 parametro: 1 nombre del recurso y 2

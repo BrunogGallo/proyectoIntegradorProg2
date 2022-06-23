@@ -84,15 +84,15 @@ const productController = {
     comentar: function (req, res) {
       
         if(!req.session.user){ 
-            return res.render('login', {error:'Iniciá sesión/ registrate para comentar'})
+            return res.redirect('/users/login')
         }
         // Set user from session user
         req.body.user_id = req.session.user.id;
         // Set book from url params
         req.body.product_id = req.params.id;
-        db.comment.create(req.body)
+        comentarios.create(req.body)
             .then(function () {
-                res.redirect('/products/detail/' + req.params.id)
+                res.redirect('/products/detalles/' + req.params.id)
             })
             .catch(function (error) {
                 res.send(error);
