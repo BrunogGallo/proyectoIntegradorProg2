@@ -117,7 +117,7 @@ const productController = {
             fotoNueva = req.file.filename; 
             db.Producto.update({
                 nombreProducto: datosNuevos.nombreProducto,
-                imagen: fotoNueva,
+                imagen: fotoNueva, //Cambiamos la foto
                 descripcion: datosNuevos.descripcion,
                 idUsuario: idUsuario
             }, {

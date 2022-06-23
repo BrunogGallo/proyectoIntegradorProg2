@@ -18,7 +18,7 @@
 	<section class="info-usuario container products-wrapper">
 		<div class="row">
 			<div class="img-container offset-3 col-2">
-				<% if (datos.fotoPerfil == undefined || datos.fotoPerfil == '') { %>
+				<% if (datos.fotoPerfil == null || datos.fotoPerfil == '') { %>
 					<img src="../images/users/default-image.png" alt="foto de perfil" class="foto-perfil"> 
 				<% } else {%>
 					<img src="../images/users/<%= datos.fotoPerfil %>" alt="foto de perfil" class="foto-perfil"> 
@@ -27,9 +27,9 @@
 			<div class="data-container col-6">
 				<div class="d-flex align-items-center ">
 					<h1 class="main-title"> <%= datos.nombreUsuario %>
-						<% if (locals.user != undefined) { %>
+						<% if (locals.user != undefined) { %> <!--El usuario esta logeado-->
 						
-							<% if (locals.user.id == datos.id) { %>
+							<% if (locals.user.id == datos.id) { %> <!--El usuario esta mirando su propio perfil-->
 								<a href="/profileEdit/<%= datos.id %>">
 									<i class="fas fa-cog"></i>
 								</a>
@@ -38,31 +38,24 @@
 						<% } %>
 					</h1>
 					
-					<!-- <% //if (loSigue) { %>
-					 	<form action="/dejarDeSeguir/<%= //datos.id %>" method="POST"> 
-							<button class="btn mt-3 ml-4" type="submit">Dejar de seguir</a>
+					<% if (locals.user == undefined) { %> <!--Si el usuario no esta logeado-->
+						<form action="/seguir/<%= datos.id %>" method="POST"> 
+							<button class="btn mt-3 ml-4" type="submit">Seguir</a>
 						</form>
-					<% //} %> -->
-					<% if (locals.user != undefined) { %>
-						
-						<% if (locals.user.id != datos.id) { %>
+					<% } else {%> <!--En caso de que este logeado-->
+
+						<% if (locals.user.id != datos.id) { %> <!--El usuario logeado no esta viendo su propio perfil-->
 							<form action="/seguir/<%= datos.id %>" method="POST"> 
 								<button class="btn mt-3 ml-4" type="submit">Seguir</a>
 							</form>
 						<% } %>
 
-					<% } else { %>
-						<form action="/seguir/<%= datos.id %>" method="POST"> 
-							<button class="btn mt-3 ml-4" type="submit">Seguir</a>
-						</form>
-					<% } %>
-						
+					<% } %> 		
 				</div>
 				<div>
 					<ul class="">
 						<li> <%= datos.productos.length %> Productos</li>
-						<li><%= datos.seguidor.length %> Seguidores </li>
-						<li><%= datos.seguido.length %> Seguidos </li>
+						<li><%= seguidores.length %> Seguidores </li>
 						<li><%= datos.comentarios.length %> Comentarios</li>
 					</ul>
 				</div>

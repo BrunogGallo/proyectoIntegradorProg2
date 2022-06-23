@@ -68,8 +68,7 @@ const indexController = {
 
     profile: (req, res) => {
         idUsuario = req.params.id
-        loSigue = false
-        db.Usuario.findByPk(idUsuario, {
+        let promesaUsuario = db.Usuario.findByPk(idUsuario, {
             include: [{
                 association: 'seguidor'
             },{
@@ -81,21 +80,17 @@ const indexController = {
                 association: 'comentarios',
                 order: ['createdAt', 'DESC']
             }
-        ]
+        ]})
+        let promesaSeguidor = db.Seguidor.findAll({
+            where: {idSeguido: req.params.id} //Busco en la tabla de seguidores si existe en la tabla de usuarios, un reegistro 
         })
-        .then ((result) => {
-             if (result.seguido.length != null) {
-                for (let i = 0; i < result.seguido.length; i++) {
-                 if (idUsuario == result.seguido[i].id) {
-                     loSigue = true
-                 }
-             } 
-             }
-            
-            console.log(result);
+
+        Promise.all([promesaSeguidor, promesaUsuario])
+        .then (([promesaSeguidor, promesaUsuario]) => {
+            console.log(promesaSeguidor);
             return res.render ('profile', {
-                datos: result,
-                loSigue: loSigue
+                datos: promesaUsuario,
+                seguidores: promesaSeguidor
             })
         })
         .catch ((error) =>{
@@ -146,31 +141,15 @@ const indexController = {
             res.redirect ('/users/login')
         } else {
         idUsuario = req.params.id
-        // db.Seguidor.create({
-        //     idSeguidor: req.session.user.id,
-        //     idSeguido: idUsuario
-        // })
-        // .then ((result) =>{
-        //     return res.redirect('/profile/' + idUsuario, {
-        //     })
-        // })
+         db.Seguidor.create({
+            idSeguidor: req.session.user.id,
+            idSeguido: idUsuario
+         })
+         .then ((result) =>{
+            return res.redirect('/profile/' + idUsuario)
+         })
     }
     },
-    unfollow: (req, res) =>{
-        idUsuario = req.params.id
-        db.Seguidor.destroy({
-            where: {
-                [op.and]: [
-                    {idSeguidor: req.session.user.id},
-                    {idSeguido: idUsuario}
-                ]
-            }
-        })
-        .then ((result) =>{
-            return res.redirect ('/profile/:' + idUsuario)
-        })
-    }
-
     
 }
 // Exporto para usar los datos en otros archivos

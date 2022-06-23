@@ -49,14 +49,20 @@ const userController = {
                         /* Este paso se ejecuta por cada validacion que queramos */
                         errors.message = "La clave es incorrecta"
                         res.locals.errors = errors;
-                        return res.render('login');
+                        return res.render('login')
+                        .catch ((error) =>{
+                            console.log(error);
+                        }) 
                     }
                     
                 } else {
                     /* Este paso se ejecuta por cada validacion que queramos */
                     errors.message = "No existe el email " + info.email
                     res.locals.errors = errors;
-                    return res.render('login');
+                    return res.render('login')
+                    .catch ((error) =>{
+                        console.log(error);
+                    }) 
                 }
             });
            
@@ -66,6 +72,9 @@ const userController = {
         req.session.user = null;
         res.clearCookie('userId');
         res.redirect('/')
+        .catch ((error) =>{
+            console.log(error);
+        }) 
     },
     register : (req, res) => {
         return res.render("register",);
@@ -94,9 +103,28 @@ const userController = {
         else {
            
             let contraseñaEncriptada = bcrypt.hashSync(info.contrasenia, 10);
-            let fotoPerfil = req.file.filename;
-                
-            users.create({
+            
+            if (info.filename == undefined) { //En el caso de que no suba una foto
+                users.create({
+                    nombre : info.nombre,
+                    apellido: info.apellido,
+                    email : info.email,
+                    nombreUsuario : info.usuario,
+                    fechaNacimiento : info.fechaNacimiento,
+                    contraseña : contraseñaEncriptada,
+                    remember_token: "false",
+                    createdAt : new Date(),
+                    updatedAt : new Date(),
+                    fotoPerfil : null,
+                })
+                .then((result) => {
+                    return res.redirect("/")
+                })
+                .catch ((error) =>{
+                    console.log(error);
+                }) 
+            } else { //Si sube una foto
+                users.create({
                 nombre : info.nombre,
                 apellido: info.apellido,
                 email : info.email,
@@ -106,16 +134,18 @@ const userController = {
                 remember_token: "false",
                 createdAt : new Date(),
                 updatedAt : new Date(),
-                fotoPerfil : fotoPerfil,
+                fotoPerfil : req.file.filename,
             })
             .then((result) => {
                 return res.redirect("/")
-            });
+            })
+            .catch ((error) =>{
+                console.log(error);
+            }) 
+            }
             
         }
-
     }
-
 }
 
 

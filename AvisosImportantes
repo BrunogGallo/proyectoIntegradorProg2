@@ -1,0 +1,11 @@
+En el trabajo pudimos codear la funcion para agregar un seguidor, los detalles se encuentran en indexController en el metodo follow().
+
+Sin embargo, una vez que la funcion se ejecuta y se crea el registro en la tabla de seguidores con los datos nuevos, el resto de las paginas dejan de funcionar de forma apropiada debido al error "RangeError: Maximum call stack size exceeded"
+
+La unica manera que encontramos de solucionar este error es borrando los datos creados en la tabla de seguidores, es decir, dejando a la tabla sin registros
+
+Hacemos estas aclaraciones con el fin de que, si lo desean, sean tenidas en cuenta a la hora de evaluar esa parte del trabajo
+
+Desde ya muchas gracias,
+
+Lola, Maru y Bruno
