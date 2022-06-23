@@ -6,7 +6,7 @@
 
 <body>
 	<!-- Header -->
-	<% if (locals.user == undefined) { %> 
+	<% if (locals.user == undefined) { %>  <!--Usamos locals porque session solo puede ser manipulado por js-->
 		<%- include('./partials/header') %> 
 	<% } else { %>
 		<%- include('./partials/headerLogeado') %>

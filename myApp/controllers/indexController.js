@@ -14,8 +14,8 @@ const indexController = {
     index: (req, res) => { 
 
         db.Producto.findAll({
-            include: [{
-                association: 'usuario' //Traemos los datos de usuario
+            include: [{ //Atributo include para implementar relaciones
+                association: 'usuario' //Traemos los datos de usuario llamando al alias que le dimos en el modelo
                 }, {
                 association: 'comentarios', //Traemos los comentarios
                 }

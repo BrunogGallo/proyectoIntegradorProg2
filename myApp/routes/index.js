@@ -6,7 +6,7 @@ const indexController = require ('../controllers/indexController');
 let multer = require('multer');
 let path = require('path');
 
-let storage = multer.diskStorage({
+let storage = multer.diskStorage({ //Implementamos configuracion de Multer
     destination : function(req, file, cb) {
         cb(null, path.join(__dirname, '../public/images/users'))
     },

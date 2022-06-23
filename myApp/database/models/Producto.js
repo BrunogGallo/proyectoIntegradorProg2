@@ -1,8 +1,8 @@
 module.exports = function (sequelize, dataTypes){
 
-    let alias = 'Producto'; //Este alias se busca como nombre en de la tabla en plural dentro de la base de datos.
+    let alias = 'Producto'; //Identifica al modelo
 
-    let cols = {
+    let cols = { //Confiugracion de las columnas de nuestras base de datos
         id: {
             autoIncrement: true,
             primaryKey: true,
@@ -16,7 +16,6 @@ module.exports = function (sequelize, dataTypes){
             type: dataTypes.DATE,
             allowNull: true
         },
-    
         nombreProducto: {
             type: dataTypes.STRING  
         },
@@ -33,7 +32,7 @@ module.exports = function (sequelize, dataTypes){
 
     }
 
-    let config = {
+    let config = { //Conifugraciones adicionales
         tableName : "productos",
         timestamps: true, //Aclareción en caso de no explicitar created_at, deleted_at y updated_at
         underscored: false, //Aclareción en caso que los timestamps usen guiones bajos en lugar de camelCase.
@@ -41,7 +40,7 @@ module.exports = function (sequelize, dataTypes){
 
     const Producto = sequelize.define(alias, cols, config);
 
-    Producto.associate = function (models) {
+    Producto.associate = function (models) { //funcion anonima
         Producto.belongsTo (models.Usuario, { //1 producto pertenece a un usuario
             as: 'usuario',
             foreignKey: 'idUsuario'
