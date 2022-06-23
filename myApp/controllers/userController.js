@@ -30,13 +30,13 @@ const userController = {
             return res.render('login')
 
         }  else {
-            users.findOne({ //CUANDO LA GUARDO, LLAMO A DB Y USO EL MET PA encontrar el regis, obj lit busca
+            users.findOne({ // MET p encontrar el regis, obj lit busca
                 where : [{ email :  info.email}] //Uso el email para identificar al usuario, ya que es un dato unico
             }).then((result) => {
                 if (result != null) {
                     let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
                     if (claveCorrecta) {
-                        req.session.user = result.dataValues;
+                        req.session.user = result.dataValues; //datos del usuario que encontre
     
                         /* Evaluar si el checkbox esta en true o existe */
     
