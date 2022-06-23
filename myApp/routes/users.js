@@ -11,7 +11,7 @@ let path = require('path');
 
 let storage = multer.diskStorage({
     destination : function(req, file, cb) {
-        cb(null, path.join(__dirname, '../public/images/users'))
+        cb(null, path.join(__dirname, '../public/images/users')) //;permite que la imagen se guarde ah'i
     },
     filename : function(req, file, cb) {
       
