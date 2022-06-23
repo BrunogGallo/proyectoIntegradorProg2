@@ -18,20 +18,26 @@
 	<div class="container products-wrapper">
 		<div class="d-flex align-items-center">
 			<h2 class="products-title"> <%= datosProducto.nombreProducto %>  </h2> 
-			
+			<% if (locals.user != undefined) { %> <!--Chequeamos si hay un usuario logeado-->
+						
+				<% if (locals.user.id == datosProducto.usuario.id) { %> <!--Chequeamos si el usuario logeado es el mismo que el dueño del producto-->
 				<p class="product-detail-description">
 					<a href="/products/editar/<%= datosProducto.id %> ">Editar</a>
 				</p>
 				<form class="form" action="/products/borrar/<%= datosProducto.id %>" method="POST">
 					<button type="submit" class="buy-now-button">BORRAR</button>
 				</form>
+				<% } %>
+
+			<% } %>
+				
 			
 			
 		</div>
 		<div class="product-detail">	
 			<div class="row">
 				<article class="col-12 col-lg-8 product-detail-info">
-					<img src= <%= datosProducto.imagen %> alt="" class="product-detail-img">
+					<img src= "/images/products/<%= datosProducto.imagen %>" alt="<%= datosProducto.nombreProducto %> " class="product-detail-img"> <!--A traves del href accedo a la imagen en la carpeta de products-->
 					<p class="product-detail-description"> <%= datosProducto.descripcion %> </p>
 					<p class="product-detail-description"> 
 						Subido por: <a href="/profile/<%= datosProducto.usuario.id %> " class= "usuario"> <%= datosProducto.usuario.nombreUsuario%> </a> 
@@ -58,8 +64,9 @@
 						<% } %>
 					</section>
 
-					<form class="form" action="/products/comentar" method="POST">
-						<input class="form-input" type="text" value="" placeholder="Agregar comentario">
+
+					<form class="form" action="/products/comentar/<%= datosProducto.id %> " method="POST">
+						<input class="form-input" type="text" name="texto" 	value="" placeholder="Agregar comentario">
 						<button type="submit" class="buy-now-button">AGREGAR COMENTARIO</button>
 					</form>
 					<hr>

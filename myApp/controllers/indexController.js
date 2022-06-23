@@ -18,9 +18,6 @@ const indexController = {
                 association: 'usuario' //Traemos los datos de usuario
                 }, {
                 association: 'comentarios', //Traemos los comentarios
-                    include: {
-                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
-                    }
                 }
             ],
             order: [
@@ -47,9 +44,6 @@ const indexController = {
                 association: 'usuario' //Traemos los datos de usuario asociados a cada producto
                 }, {
                 association: 'comentarios', //Traemos los comentarios asociados a cada producto
-                    include: {
-                        association: 'comentarioUsuario' //Con este alias llamamos a la relacion entre comentarios y usuario
-                    }
                 }],
             where: {
                 [op.or]: [ //El operador or permite que busque tanto por descripcion como por nombre del producto
@@ -74,6 +68,7 @@ const indexController = {
 
     profile: (req, res) => {
         idUsuario = req.params.id
+        loSigue = false
         db.Usuario.findByPk(idUsuario, {
             include: [{
                 association: 'seguidor'
@@ -89,9 +84,18 @@ const indexController = {
         ]
         })
         .then ((result) => {
+             if (result.seguido.length != null) {
+                for (let i = 0; i < result.seguido.length; i++) {
+                 if (idUsuario == result.seguido[i].id) {
+                     loSigue = true
+                 }
+             } 
+             }
+            
             console.log(result);
             return res.render ('profile', {
-                datos: result
+                datos: result,
+                loSigue: loSigue
             })
         })
         .catch ((error) =>{
@@ -142,14 +146,14 @@ const indexController = {
             res.redirect ('/users/login')
         } else {
         idUsuario = req.params.id
-        db.Seguidor.create({
-            idSeguidor: req.session.user.id,
-            idSeguido: idUsuario
-        })
-        .then ((result) =>{
-            return res.redirect('/profile/:' + idUsuario, {
-            })
-        })
+        // db.Seguidor.create({
+        //     idSeguidor: req.session.user.id,
+        //     idSeguido: idUsuario
+        // })
+        // .then ((result) =>{
+        //     return res.redirect('/profile/' + idUsuario, {
+        //     })
+        // })
     }
     },
     unfollow: (req, res) =>{

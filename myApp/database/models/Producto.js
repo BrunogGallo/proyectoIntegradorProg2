@@ -52,7 +52,7 @@ module.exports = function (sequelize, dataTypes){
         })
     }
 
-    return Producto; //Cierra la funcion que exportamos al principio del archivo.
+    return Producto; //Cierra la funcion 
     }
 
 

@@ -18,7 +18,7 @@
 	<section class="info-usuario container products-wrapper">
 		<div class="row">
 			<div class="img-container offset-3 col-2">
-				<% if (datos.fotoPerfil == undefined || datos.fotoPerfil == null) { %>
+				<% if (datos.fotoPerfil == undefined || datos.fotoPerfil == '') { %>
 					<img src="../images/users/default-image.png" alt="foto de perfil" class="foto-perfil"> 
 				<% } else {%>
 					<img src="../images/users/<%= datos.fotoPerfil %>" alt="foto de perfil" class="foto-perfil"> 
@@ -30,16 +30,33 @@
 						<% if (locals.user != undefined) { %>
 						
 							<% if (locals.user.id == datos.id) { %>
-								<a href="/profileEdit/<%= datos.id %>"></a>
+								<a href="/profileEdit/<%= datos.id %>">
 									<i class="fas fa-cog"></i>
 								</a>
 							<% } %>
-							
+
 						<% } %>
 					</h1>
-						<form action="/seguir/:<%= datos.id %>" method="POST"> 
+					
+					<!-- <% //if (loSigue) { %>
+					 	<form action="/dejarDeSeguir/<%= //datos.id %>" method="POST"> 
+							<button class="btn mt-3 ml-4" type="submit">Dejar de seguir</a>
+						</form>
+					<% //} %> -->
+					<% if (locals.user != undefined) { %>
+						
+						<% if (locals.user.id != datos.id) { %>
+							<form action="/seguir/<%= datos.id %>" method="POST"> 
+								<button class="btn mt-3 ml-4" type="submit">Seguir</a>
+							</form>
+						<% } %>
+
+					<% } else { %>
+						<form action="/seguir/<%= datos.id %>" method="POST"> 
 							<button class="btn mt-3 ml-4" type="submit">Seguir</a>
 						</form>
+					<% } %>
+						
 				</div>
 				<div>
 					<ul class="">
@@ -62,7 +79,7 @@
 			</div>
 			<!-- Show mis productos -->
 			<% if (datos.productos.length == undefined) { %>
-				<h2>No hay ningun proudcto</h2>
+				<h2>No hay ningun producto</h2>
 			<% } else {%>
 
 				<% for( let i = 0; i < datos.productos.length; i++ ) { %>
@@ -70,12 +87,11 @@
 						<section class="product-box">
 							<a href="/products/detalles/<%= datos.productos[i].id %> ">
 								<figure class="product-box_image">
-									<img src= <%= datos.productos[i].imagen %>  alt="<%= datos.productos[i].nombreProducto %>">
+									<img src= "/images/products/<%= datos.productos[i].imagen %>"  alt="<%= datos.productos[i].nombreProducto %>">
 								</figure>
 								<article class="product-box_data">
 									<h2> <%= datos.productos[i].nombreProducto %> </h2>
 									<p> <%= datos.productos[i].descripcion %> </p>
-									<p>Comentarios: <%= datos.comentarios.length %> </p>
 								</article>
 							</a>
 						</section>

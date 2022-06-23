@@ -16,11 +16,10 @@
 				<h2 class="products-title">Ingresar</h2>
 			</div>
 			<!--Form de Login-->
-	        <% if(locals.errors){ %>
-				<p class="mensajeError" style="color: red;"> <%= errors.message %>
-				</p>
-			<% } %> 
 			<form action="/users/login" method="POST">
+				<% if(locals.errors){ %>
+					<h2 class="mensajeError" style="color: red;"> <%= errors.message %></h2>
+				<% } %> 
 				<div class="title">Login</div>
 				<label class="form-label" for="email">Email:</label>
 				<input class="form-input" id="email" type="email" name="email" value="">

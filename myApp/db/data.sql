@@ -1,44 +1,7 @@
-CREATE SCHEMA localHost
+CREATE SCHEMA db
 
-CREATE TABLE  usuario (
-/*Nombre  columna   tipoDato  Restricciones*/
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-/*LA COMA ES PARA LA SEGUNDA COLUMNA, AQUI SEGUNDA COLUMNA*/
-nombre            VARCHAR(50)      NOT NULL,
-apellido          VARCHAR(50)      NOT NULL,
-email             VARCHAR(50)      NOT NULL,
-nombreUsuario     VARCHAR(50)      NOT NULL,
-contraseña        VARCHAR(50)      NOT NULL,
-fechaNacimiento   DATE             NOT NULL,
-nroDocumento      INT              NOT NULL,
-/*AQUI EN FOTO PONEMOS VARCHAR POR QUE SE GUARDA COMO STRING*/
-fotoPerfil        VARCHAR(360)
-);
+USE db
 
-CREATE TABLE  comentarios (
-
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-
-nombreUsuario      VARCHAR(50)       NOT NULL,
-text               VARCHAR(500)      NOT NULL,
-contraseña         VARCHAR(50)       NOT NULL,
-imagen             VARCHAR(360)
-);
-
-CREATE TABLE  productos (
-
-id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, 
-
-nombreProducto     	VARCHAR(50)     NOT NULL,
-descripcion    	    VARCHAR(500)    NOT NULL,
-fechaCarga          DATE      		NOT NULL,
-imagen              VARCHAR(360)    NOT NULL
-);
-
-
-
-
-//Tablas bruno
 CREATE TABLE  usuarios (
 
 id                  INT              UNSIGNED   PRIMARY KEY  AUTO_INCREMENT, 
@@ -46,8 +9,8 @@ createdAt			DATE 		     NULL,
 updatedAt           DATE 		     NULL,
 nombre      		VARCHAR(50)      NOT NULL,
 apellido    		VARCHAR(50)      NOT NULL,
-email       		VARCHAR(50)      NOT NULL,
-nombreUsuario       VARCHAR(50)      NOT NULL,
+email       		VARCHAR(50)      NOT NULL   UNIQUE,
+nombreUsuario       VARCHAR(50)      NOT NULL   UNIQUE,
 contraseña       	VARCHAR(100)     NOT NULL,
 fechaNacimiento     DATE      		 NOT NULL,
 seguidores          INT, 
@@ -89,6 +52,7 @@ idSeguido		INT     UNSIGNED 	NOT NULL,
 FOREIGN KEY (idSeguidor) REFERENCES usuarios (id),
 FOREIGN KEY (idSeguido) REFERENCES usuarios (id)
 );
+//RangeError: Maximum call stack size exceeded//
 
 datos para usuario
 INSERT INTO usuarios VALUES (default, default, default, 'Juan', 'Perez', 'juanperez@gmail.com', 'juanchoperez', 'root', '2020-05-09', 0, 'https://upload.wikimedia.org/wikipedia/commons/c/c1/Lionel_Messi_20180626.jpg');
