@@ -34,10 +34,11 @@ app.use (session({
 
 //Middleware de session guardado en locals
 app.use(function(req, res, next) {
+  res.locals.user = null
    if (req.session.user != undefined) //Chequeo si hay un usuario logeado
-  {
-      res.locals.user = req.session.user; //Declaro res.locals para poder utilizar los datos del usuario
-  }
+    {  
+    res.locals.user = req.session.user; //Declaro res.locals para poder utilizar los datos del usuario
+    }
   return next();
 })
 
@@ -48,7 +49,7 @@ app.use(function (req, res, next) {
 
     db.Usuario.findByPk(idUsuario) //Busco el usuario usando ese id
     .then ((result) => {
-      req.session.user = result; //Guardo el resultado en session y en locals
+      req.session.user = result; //Guardo el resultado en session y en locals 
       return next();
     }).catch((error) => {
       console.log(error);

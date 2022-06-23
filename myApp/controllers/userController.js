@@ -43,7 +43,6 @@ const userController = {
                         if (req.body.remember != undefined) {
                             res.cookie('userId', req.session.user.id, { maxAge : 1000 * 60 * 5}) //Guardo en una cookie con nombre userId el id del usuario encontrado que ahora esta guardado en session
                         }
-                       console.log(result.dataValues);
                         return res.redirect("/")
                     } else {
                         /* Este paso se ejecuta por cada validacion que queramos */
@@ -64,7 +63,7 @@ const userController = {
     },
     logout: function (req, res, next) {
         req.session.user = null;
-        res.clearCookie('idUsuario');
+        res.clearCookie('userId');
         res.redirect('/')
     },
     register : (req, res) => {
