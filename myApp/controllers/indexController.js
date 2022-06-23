@@ -74,6 +74,7 @@ const indexController = {
 
     profile: (req, res) => {
         idUsuario = req.params.id
+        loSigue = false
         db.Usuario.findByPk(idUsuario, {
             include: [{
                 association: 'seguidor'
@@ -89,9 +90,18 @@ const indexController = {
         ]
         })
         .then ((result) => {
+            // if (result.seguido.length != null) {
+            //    for (let i = 0; i < result.seguido.length; i++) {
+            //     if (idUsuario == result.seguido[i].id) {
+            //         loSigue = true
+            //     }
+            // } 
+            // }
+            
             console.log(result);
             return res.render ('profile', {
-                datos: result
+                datos: result,
+                loSigue: loSigue
             })
         })
         .catch ((error) =>{
