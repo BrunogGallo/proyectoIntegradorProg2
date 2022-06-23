@@ -97,9 +97,9 @@ const productController = {
         if(req.session.user == undefined){  //unicamente los usuarios logueados puedan comentar 
             return res.redirect('/users/login') //sino, me va redirigir a otro lado 
         }
-        texto = req.body.texto
-        idUsuario= req.session.user.id;
-        idProducto = req.params.id;
+        texto = req.body.texto  //extraigo el texto del formulario 
+        idUsuario= req.session.user.id; //
+        idProducto = req.params.id; // 
         comentarios.create({
             idUsuario: idUsuario,
             idProducto: idProducto,
