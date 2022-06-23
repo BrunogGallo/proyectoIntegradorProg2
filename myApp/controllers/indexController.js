@@ -26,7 +26,7 @@ const indexController = {
             order: [
                 ['createdAt', 'DESC'] //Ordenaoms los datos recibidos de mas nuevo a mas viejo de forma descendente
             ],
-            limit: 20 //Pongo un limite para la cantidad de datos que pueda traer el findall
+            limit: 10 //Pongo un limite para la cantidad de datos que pueda traer el findall
         })
             .then((result) =>{
                 console.log(result);
@@ -143,7 +143,7 @@ const indexController = {
         } else {
         idUsuario = req.params.id
         db.Seguidor.create({
-            idSeguidor: req.session.userr.id,
+            idSeguidor: req.session.user.id,
             idSeguido: idUsuario
         })
         .then ((result) =>{
@@ -157,7 +157,7 @@ const indexController = {
         db.Seguidor.destroy({
             where: {
                 [op.and]: [
-                    {idSeguidor: req.session.userr.id},
+                    {idSeguidor: req.session.user.id},
                     {idSeguido: idUsuario}
                 ]
             }
@@ -174,12 +174,3 @@ module.exports = indexController
 
 
 //Para pegar en profile
-// <% if (idSeguidor: req.session.user.id && idSeguido: req.params.id) { %>
-//     <form action="/dejarDeSeguir/:<%= datos.id %>" method="POST"> 
-//         <button class="btn mt-3 ml-4" type="submit">Dejar de</a>
-//     </form>
-// <% } else {%>
-//     <form action="/seguir/:<%= datos.id %>" method="POST"> 
-//         <button class="btn mt-3 ml-4" type="submit">Seguir</a>
-//     </form>
-// <% } %> 
