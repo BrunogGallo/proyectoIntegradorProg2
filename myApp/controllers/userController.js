@@ -1,9 +1,9 @@
 const db = require('../database/models')
 
-const users = db.Usuario
+const users = db.Usuario 
 const productos = db.Producto
 const comentarios = db.Comentario
-//Requiriendo el modulo de bcryptjs-->libreria de node, que es para ecriptar las contra.
+//Requiriendo el modulo de bcryptjs-->modulo de node, que es para ecriptar las contra.
 
 const bcrypt = require('bcryptjs')
 
@@ -17,7 +17,7 @@ const userController = {
 
     procesarLogin: function (req, res) {
         
-        let info = req.body;
+        let info = req.body; //OBTENGO INFO C DE F
         let errors = {};
         if (info.email == "") {
             errors.message = "El input de email esta vacio";
@@ -30,13 +30,13 @@ const userController = {
             return res.render('login')
 
         }  else {
-            users.findOne({
+            users.findOne({ // MET p encontrar el regis, obj lit busca
                 where : [{ email :  info.email}] //Uso el email para identificar al usuario, ya que es un dato unico
             }).then((result) => {
                 if (result != null) {
                     let claveCorrecta = bcrypt.compareSync(info.contraseña  , result.contraseña )
                     if (claveCorrecta) {
-                        req.session.user = result.dataValues;
+                        req.session.user = result.dataValues; //datos del usuario que encontre
     
                         /* Evaluar si el checkbox esta en true o existe */
     
@@ -109,7 +109,6 @@ const userController = {
                 fotoPerfil : fotoPerfil,
             })
             .then((result) => {
-                console.log(result)
                 return res.redirect("/")
             });
             
