@@ -90,13 +90,13 @@ const indexController = {
         ]
         })
         .then ((result) => {
-            // if (result.seguido.length != null) {
-            //    for (let i = 0; i < result.seguido.length; i++) {
-            //     if (idUsuario == result.seguido[i].id) {
-            //         loSigue = true
-            //     }
-            // } 
-            // }
+             if (result.seguido.length != null) {
+                for (let i = 0; i < result.seguido.length; i++) {
+                 if (idUsuario == result.seguido[i].id) {
+                     loSigue = true
+                 }
+             } 
+             }
             
             console.log(result);
             return res.render ('profile', {
@@ -152,14 +152,14 @@ const indexController = {
             res.redirect ('/users/login')
         } else {
         idUsuario = req.params.id
-        db.Seguidor.create({
-            idSeguidor: req.session.user.id,
-            idSeguido: idUsuario
-        })
-        .then ((result) =>{
-            return res.redirect('/profile/:' + idUsuario, {
-            })
-        })
+        // db.Seguidor.create({
+        //     idSeguidor: req.session.user.id,
+        //     idSeguido: idUsuario
+        // })
+        // .then ((result) =>{
+        //     return res.redirect('/profile/' + idUsuario, {
+        //     })
+        // })
     }
     },
     unfollow: (req, res) =>{
