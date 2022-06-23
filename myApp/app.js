@@ -27,9 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Middleware de session
 app.use (session({
-  secret: 'myApp', //este dato permite identificar la pagina web
-  resave: false,  
-  saveUninitialized: true
+  secret: 'myApp', //este dato permite identificar la pagina web, IDENTIFICADOR UNICO
+  resave: false,  //2nda propiedad lo  ponemos en 
+  saveUninitialized: true //CON ESTO YA OCMENZAMOS  A TENER INFO GUARDADA EN SESSION 
 }))
 
 //Middleware de session guardado en locals

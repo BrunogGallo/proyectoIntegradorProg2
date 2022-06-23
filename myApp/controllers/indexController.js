@@ -75,7 +75,7 @@ const indexController = {
             },{
                 association: 'seguido'
             }, {
-                association: 'productos',
+                association: 'carlitos',
                 order: ['createdAt', 'DESC']
             }, {
                 association: 'comentarios',

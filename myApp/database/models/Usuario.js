@@ -54,7 +54,7 @@ module.exports = function (sequelize, dataTypes){
 
     Usuario.associate = function (models) {
         Usuario.hasMany(models.Producto, { //1 usuario tiene muchos productos
-            as: 'productos', //Alias con el que vamos a identificar a la relacion
+            as: 'carlitos', //Alias con el que vamos a identificar a la relacion
             foreignKey: 'idUsuario' //Campo donde se encuentra la foreignKey que relaciona ambas tablas
         })
         Usuario.hasMany(models.Comentario, { //1 usuario tiene muchos comentarios
